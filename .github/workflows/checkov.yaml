@@ -4,8 +4,29 @@ on:
   push:
     branches: [ feature-github-action ]
 jobs:
-  test:
+  find-jobs:
+    name: Find Jobs
+    container: debian:buster-slim
+    outputs:
+      folders: ${{ steps.jobs.outputs.folders }}
+    steps:
+      - uses: actions/checkout@v1
+      - id: jobs
+        uses: philips-labs/list-folders-action@v1
+        with:
+          path: ./path/to/folder
+
+  matrix:
     runs-on: ubuntu-latest
+    name: Matrix Jobs
+    needs: [find-jobs]
+    container: ubuntu
+    defaults:
+      run:
+        working-directory: ${{ matrix.folder }}
+    strategy:
+      matrix:
+        folder: ${{ fromJson(needs.find-jobs.outputs.folders )}}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.8
@@ -16,6 +37,6 @@ jobs:
         uses: bridgecrewio/checkov-action@master
         if: always()
         with:
-          directory: examples/
-          shouldScanSubdirectories: true
+          directory: ${{ matrix.folder }}
           framework: terraform
+  
