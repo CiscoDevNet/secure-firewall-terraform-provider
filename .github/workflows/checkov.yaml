@@ -17,4 +17,5 @@ jobs:
         if: always()
         with:
           directory: examples/
+          shouldScanSubdirectories: true
           framework: terraform
