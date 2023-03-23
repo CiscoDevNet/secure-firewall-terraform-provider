@@ -16,11 +16,5 @@ jobs:
         uses: bridgecrewio/checkov-action@master
         if: always()
         with:
-          directory: examples/fmc_access_policies
-          framework: terraform
-      - name: Test with Checkov fmc_access_policies_category
-        uses: bridgecrewio/checkov-action@master
-        if: always()
-        with:
-          directory: examples/fmc_access_policies_category
+          directory: examples/*
           framework: terraform
