@@ -16,5 +16,5 @@ jobs:
         uses: bridgecrewio/checkov-action@master
         if: always()
         with:
-          directory: examples/*
+          directory: examples/
           framework: terraform
