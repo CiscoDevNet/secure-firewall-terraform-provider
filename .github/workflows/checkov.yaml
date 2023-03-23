@@ -1,0 +1,25 @@
+name: Test checkov
+on:
+  push:
+    branches: [ feature-github-action ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Test with Checkov fmc_access_policies
+        uses: bridgecrewio/checkov-action@master
+        if: always()
+        with:
+          directory: examples/fmc_access_policies
+          framework: terraform
+      - name: Test with Checkov fmc_access_policies_category
+        uses: bridgecrewio/checkov-action@master
+        if: always()
+        with:
+          directory: examples/fmc_access_policies_category
+          framework: terraform
