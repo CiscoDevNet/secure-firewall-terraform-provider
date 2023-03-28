@@ -1,5 +1,5 @@
 
-# Documentation line to trigger action
+# Documentation line to trigger action2
 name: Test checkov
 on:
   push:
