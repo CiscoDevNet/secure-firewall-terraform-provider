@@ -1,6 +1,8 @@
 name: Manual-Code-Scan
 
-on: workflow_dispatch
+on:
+  push:
+    branches: [ feature-github-action ]
 
 jobs:
 
