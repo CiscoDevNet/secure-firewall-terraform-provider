@@ -1,4 +1,4 @@
-name: weekly-repo-scan
+name: Manual Code Scan
 
 on: workflow_dispatch
 
