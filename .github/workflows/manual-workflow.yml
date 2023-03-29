@@ -1,7 +1,6 @@
 name: weekly-repo-scan
 
-on:
-  push: workflow_dispatch
+on: workflow_dispatch
 
 jobs:
 
