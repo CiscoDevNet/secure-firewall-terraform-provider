@@ -2,7 +2,7 @@ name: Manual-Code-Scan
 
 on:
   push:
-    branches: [ feature-github-action ]
+    branches: [ main ]
 
 jobs:
 
