@@ -80,7 +80,7 @@ type NetworkGroupObjectsResponse struct {
 
 // /fmc_config/v1/domain/DomainUUID/object/networkgroups?bulk=true ( Bulk POST operation on network objects. )
 func (v *Client) GetFmcNetworkGroupObjectByName(ctx context.Context, name string) (*NetworkGroupObjectResponse, error) {
-	url := fmt.Sprintf("%s/object/networkgroups", v.domainBaseURL)
+	url := fmt.Sprintf("%s/object/networkgroups?filter=nameOrValue:%s", v.domainBaseURL, name)
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
 		return nil, fmt.Errorf("getting network group object: %s - %s", url, err.Error())
