@@ -1,0 +1,4 @@
+fmc_username = "<your_fmc_username>"
+fmc_password = "<your_fmc_password>" # Using env variable is recommended for sensitive variables
+fmc_host = "1.2.3.4"
+fmc_insecure_skip_verify = false
