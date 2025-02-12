@@ -32,6 +32,7 @@ func TestAccDataSourceFmcURLGroup(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_url_group.test", "name", "my_url_group"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_url_group.test", "description", "My URL group"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("data.fmc_url_group.test", "type"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_url_group.test", "literals.0.url", "https://www.example.com/app"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },

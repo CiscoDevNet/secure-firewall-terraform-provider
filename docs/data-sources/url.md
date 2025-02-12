@@ -31,4 +31,5 @@ data "fmc_url" "example" {
 
 - `description` (String) Description of the object.
 - `overridable` (Boolean) Indicates whether object values can be overridden.
+- `type` (String) Type of the object; this value is always 'Url'.
 - `url` (String) URL value.

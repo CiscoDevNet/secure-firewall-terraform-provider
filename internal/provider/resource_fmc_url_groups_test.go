@@ -33,6 +33,7 @@ func TestAccFmcURLGroups(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttrSet("fmc_url_groups.test", "items.url_group_1.id"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_url_groups.test", "items.url_group_1.description", "My URL group"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("fmc_url_groups.test", "items.url_group_1.type"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_url_groups.test", "items.url_group_1.literals.0.url", "https://www.example.com/app"))
 
 	var steps []resource.TestStep

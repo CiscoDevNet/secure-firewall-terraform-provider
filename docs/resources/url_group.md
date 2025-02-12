@@ -47,6 +47,7 @@ resource "fmc_url_group" "example" {
 ### Read-Only
 
 - `id` (String) Id of the object
+- `type` (String) Type of the object; this value is always 'UrlGroup'.
 
 <a id="nestedatt--urls"></a>
 ### Nested Schema for `urls`

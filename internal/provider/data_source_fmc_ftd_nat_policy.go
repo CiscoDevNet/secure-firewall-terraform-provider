@@ -81,6 +81,10 @@ func (d *FTDNATPolicyDataSource) Schema(ctx context.Context, req datasource.Sche
 				MarkdownDescription: "Description of the object.",
 				Computed:            true,
 			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type of the object; this value is always 'FTDNatPolicy'.",
+				Computed:            true,
+			},
 			"manual_nat_rules": schema.ListNestedAttribute{
 				MarkdownDescription: "The ordered list of manual NAT rules.",
 				Computed:            true,

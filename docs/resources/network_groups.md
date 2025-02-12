@@ -58,6 +58,7 @@ Optional:
 Read-Only:
 
 - `id` (String) Id of the managed Network Group.
+- `type` (String) Type of the object; this value is always 'NetworkGroup'.
 
 <a id="nestedatt--items--literals"></a>
 ### Nested Schema for `items.literals`

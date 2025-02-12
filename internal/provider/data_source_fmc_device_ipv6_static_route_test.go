@@ -34,7 +34,8 @@ func TestAccDataSourceFmcDeviceIPv6StaticRoute(t *testing.T) {
 		t.Skip("skipping test, set environment variable TF_VAR_device_id")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_device_ipv6_static_route.test", "gateway_literal", "2024::1"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("data.fmc_device_ipv6_static_route.test", "type"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_device_ipv6_static_route.test", "gateway_host_literal", "2024::1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -81,7 +82,7 @@ func testAccDataSourceFmcDeviceIPv6StaticRouteConfig() string {
 	config += `		id = data.fmc_host.test.id` + "\n"
 	config += `	}]` + "\n"
 	config += `	metric_value = null` + "\n"
-	config += `	gateway_literal = "2024::1"` + "\n"
+	config += `	gateway_host_literal = "2024::1"` + "\n"
 	config += `	is_tunneled = true` + "\n"
 	config += `}` + "\n"
 

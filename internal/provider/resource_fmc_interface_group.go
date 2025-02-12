@@ -90,6 +90,13 @@ func (r *InterfaceGroupResource) Schema(ctx context.Context, req resource.Schema
 					stringvalidator.OneOf("INLINE", "SWITCHED", "ROUTED"),
 				},
 			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Type of the object; this value is always 'InterfaceGroup'.").String,
+				Computed:            true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.UseStateForUnknown(),
+				},
+			},
 			"interfaces": schema.SetNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").String,
 				Optional:            true,

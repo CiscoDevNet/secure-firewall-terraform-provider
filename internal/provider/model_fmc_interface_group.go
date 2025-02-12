@@ -38,6 +38,7 @@ type InterfaceGroup struct {
 	Domain        types.String               `tfsdk:"domain"`
 	Name          types.String               `tfsdk:"name"`
 	InterfaceMode types.String               `tfsdk:"interface_mode"`
+	Type          types.String               `tfsdk:"type"`
 	Interfaces    []InterfaceGroupInterfaces `tfsdk:"interfaces"`
 }
 
@@ -96,6 +97,11 @@ func (data *InterfaceGroup) fromBody(ctx context.Context, res gjson.Result) {
 	} else {
 		data.InterfaceMode = types.StringNull()
 	}
+	if value := res.Get("type"); value.Exists() {
+		data.Type = types.StringValue(value.String())
+	} else {
+		data.Type = types.StringNull()
+	}
 	if value := res.Get("interfaces"); value.Exists() {
 		data.Interfaces = make([]InterfaceGroupInterfaces, 0)
 		value.ForEach(func(k, res gjson.Result) bool {
@@ -130,6 +136,11 @@ func (data *InterfaceGroup) fromBodyPartial(ctx context.Context, res gjson.Resul
 		data.InterfaceMode = types.StringValue(value.String())
 	} else {
 		data.InterfaceMode = types.StringNull()
+	}
+	if value := res.Get("type"); value.Exists() && !data.Type.IsNull() {
+		data.Type = types.StringValue(value.String())
+	} else {
+		data.Type = types.StringNull()
 	}
 	for i := 0; i < len(data.Interfaces); i++ {
 		keys := [...]string{"id"}
@@ -183,6 +194,13 @@ func (data *InterfaceGroup) fromBodyPartial(ctx context.Context, res gjson.Resul
 // fromBodyUnknowns updates the Unknown Computed tfstate values from a JSON.
 // Known values are not changed (usual for Computed attributes with UseStateForUnknown or with Default).
 func (data *InterfaceGroup) fromBodyUnknowns(ctx context.Context, res gjson.Result) {
+	if data.Type.IsUnknown() {
+		if value := res.Get("type"); value.Exists() {
+			data.Type = types.StringValue(value.String())
+		} else {
+			data.Type = types.StringNull()
+		}
+	}
 }
 
 // End of section. //template:end fromBodyUnknowns

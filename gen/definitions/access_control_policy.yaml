@@ -10,6 +10,10 @@ attributes:
     description: Name of the Access Control Policy.
     example: my_access_control_policy
     data_source_query: true
+  - model_name: type
+    type: String
+    description: Type of the object; this value is always 'AccessPolicy'.
+    computed: true
   - model_name: description
     type: String
     description: Description of the Access Control Policy.

@@ -34,6 +34,7 @@ func TestAccDataSourceFmcFQDNObject(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_fqdn_object.test", "fqdn", "www.example.com"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_fqdn_object.test", "dns_resolution", "IPV4_AND_IPV6"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_fqdn_object.test", "description", "My FQDN Object"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("data.fmc_fqdn_object.test", "type"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,

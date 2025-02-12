@@ -32,3 +32,4 @@ data "fmc_network_analysis_policy" "example" {
 - `base_policy_id` (String) Id of the base policy.
 - `description` (String) Description of the policy.
 - `inspection_mode` (String) Inspection mode.
+- `type` (String) Type of the object; this value is always 'NetworkAnalysisPolicy'.

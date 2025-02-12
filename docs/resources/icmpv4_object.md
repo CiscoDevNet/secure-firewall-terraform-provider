@@ -41,7 +41,7 @@ resource "fmc_icmpv4_object" "example" {
 ### Read-Only
 
 - `id` (String) Id of the object
-- `type` (String)
+- `type` (String) Type of the object; this value is always 'ICMPV4Object'.
 
 ## Import
 

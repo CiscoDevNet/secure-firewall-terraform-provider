@@ -35,6 +35,7 @@ func TestAccFmcFQDNObject(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_fqdn_object.test", "fqdn", "www.example.com"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_fqdn_object.test", "dns_resolution", "IPV4_AND_IPV6"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_fqdn_object.test", "description", "My FQDN Object"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("fmc_fqdn_object.test", "type"))
 
 	var steps []resource.TestStep
 	if os.Getenv("SKIP_MINIMUM_TEST") == "" {

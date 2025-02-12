@@ -32,6 +32,7 @@ data "fmc_ftd_nat_policy" "example" {
 - `auto_nat_rules` (Attributes List) The list of auto NAT rules. (see [below for nested schema](#nestedatt--auto_nat_rules))
 - `description` (String) Description of the object.
 - `manual_nat_rules` (Attributes List) The ordered list of manual NAT rules. (see [below for nested schema](#nestedatt--manual_nat_rules))
+- `type` (String) Type of the object; this value is always 'FTDNatPolicy'.
 
 <a id="nestedatt--auto_nat_rules"></a>
 ### Nested Schema for `auto_nat_rules`

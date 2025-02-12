@@ -32,6 +32,7 @@ func TestAccDataSourceFmcIntrusionPolicy(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_intrusion_policy.test", "name", "my_intrusion_policy"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_intrusion_policy.test", "description", "My IPS Policy"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("data.fmc_intrusion_policy.test", "type"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_intrusion_policy.test", "inspection_mode", "PREVENTION"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },

@@ -42,6 +42,7 @@ type AccessControlPolicy struct {
 	Id                             types.String                    `tfsdk:"id"`
 	Domain                         types.String                    `tfsdk:"domain"`
 	Name                           types.String                    `tfsdk:"name"`
+	Type                           types.String                    `tfsdk:"type"`
 	Description                    types.String                    `tfsdk:"description"`
 	DefaultAction                  types.String                    `tfsdk:"default_action"`
 	DefaultActionId                types.String                    `tfsdk:"default_action_id"`
@@ -579,6 +580,11 @@ func (data *AccessControlPolicy) fromBody(ctx context.Context, res gjson.Result)
 	} else {
 		data.Name = types.StringNull()
 	}
+	if value := res.Get("type"); value.Exists() {
+		data.Type = types.StringValue(value.String())
+	} else {
+		data.Type = types.StringNull()
+	}
 	if value := res.Get("description"); value.Exists() {
 		data.Description = types.StringValue(value.String())
 	} else {
@@ -1089,6 +1095,11 @@ func (data *AccessControlPolicy) fromBodyPartial(ctx context.Context, res gjson.
 		data.Name = types.StringValue(value.String())
 	} else {
 		data.Name = types.StringNull()
+	}
+	if value := res.Get("type"); value.Exists() && !data.Type.IsNull() {
+		data.Type = types.StringValue(value.String())
+	} else {
+		data.Type = types.StringNull()
 	}
 	if value := res.Get("description"); value.Exists() && !data.Description.IsNull() {
 		data.Description = types.StringValue(value.String())
@@ -2156,6 +2167,13 @@ func (data *AccessControlPolicy) adjustFromBody(ctx context.Context, res gjson.R
 // fromBodyUnknowns updates the Unknown Computed tfstate values from a JSON.
 // Known values are not changed (usual for Computed attributes with UseStateForUnknown or with Default).
 func (data *AccessControlPolicy) fromBodyUnknowns(ctx context.Context, res gjson.Result) {
+	if data.Type.IsUnknown() {
+		if value := res.Get("type"); value.Exists() {
+			data.Type = types.StringValue(value.String())
+		} else {
+			data.Type = types.StringNull()
+		}
+	}
 	if data.DefaultActionId.IsUnknown() {
 		if value := res.Get("defaultAction.id"); value.Exists() {
 			data.DefaultActionId = types.StringValue(value.String())

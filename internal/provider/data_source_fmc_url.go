@@ -88,6 +88,10 @@ func (d *URLDataSource) Schema(ctx context.Context, req datasource.SchemaRequest
 				MarkdownDescription: "Indicates whether object values can be overridden.",
 				Computed:            true,
 			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type of the object; this value is always 'Url'.",
+				Computed:            true,
+			},
 		},
 	}
 }

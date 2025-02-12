@@ -33,3 +33,4 @@ data "fmc_fqdn_object" "example" {
 - `dns_resolution` (String) Type of DNS resolution.
 - `fqdn` (String) Fully Qualified Domain Name.
 - `overridable` (Boolean) Indicates whether object values can be overridden.
+- `type` (String) Type of the object; this value is always 'FQDN'.

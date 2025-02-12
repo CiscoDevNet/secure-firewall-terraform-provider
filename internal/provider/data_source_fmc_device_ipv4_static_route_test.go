@@ -34,6 +34,7 @@ func TestAccDataSourceFmcDeviceIPv4StaticRoute(t *testing.T) {
 		t.Skip("skipping test, set environment variable TF_VAR_device_id")
 	}
 	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttrSet("data.fmc_device_ipv4_static_route.test", "type"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_device_ipv4_static_route.test", "gateway_host_literal", "10.0.0.1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },

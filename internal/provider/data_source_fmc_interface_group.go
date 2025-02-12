@@ -80,6 +80,10 @@ func (d *InterfaceGroupDataSource) Schema(ctx context.Context, req datasource.Sc
 				MarkdownDescription: "All interfaces' types must match the interface mode.",
 				Computed:            true,
 			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type of the object; this value is always 'InterfaceGroup'.",
+				Computed:            true,
+			},
 			"interfaces": schema.SetNestedAttribute{
 				MarkdownDescription: "",
 				Computed:            true,

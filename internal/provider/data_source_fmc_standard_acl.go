@@ -80,6 +80,10 @@ func (d *StandardACLDataSource) Schema(ctx context.Context, req datasource.Schem
 				MarkdownDescription: "Description of the object.",
 				Computed:            true,
 			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type of the object; this value is always 'StandardAccessList'.",
+				Computed:            true,
+			},
 			"entries": schema.ListNestedAttribute{
 				MarkdownDescription: "Ordered list of ACL's entries.",
 				Computed:            true,

@@ -44,6 +44,7 @@ type NetworkGroups struct {
 type NetworkGroupsItems struct {
 	Id            types.String                 `tfsdk:"id"`
 	Description   types.String                 `tfsdk:"description"`
+	Type          types.String                 `tfsdk:"type"`
 	Overridable   types.Bool                   `tfsdk:"overridable"`
 	NetworkGroups types.Set                    `tfsdk:"network_groups"`
 	Objects       []NetworkGroupsItemsObjects  `tfsdk:"objects"`
@@ -155,6 +156,11 @@ func (data *NetworkGroups) fromBody(ctx context.Context, res gjson.Result) {
 		} else {
 			data.Description = types.StringNull()
 		}
+		if value := res.Get("type"); value.Exists() {
+			data.Type = types.StringValue(value.String())
+		} else {
+			data.Type = types.StringNull()
+		}
 		if value := res.Get("overridable"); value.Exists() {
 			data.Overridable = types.BoolValue(value.Bool())
 		} else {
@@ -230,6 +236,11 @@ func (data *NetworkGroups) fromBodyPartial(ctx context.Context, res gjson.Result
 			data.Description = types.StringValue(value.String())
 		} else {
 			data.Description = types.StringNull()
+		}
+		if value := res.Get("type"); value.Exists() && !data.Type.IsNull() {
+			data.Type = types.StringValue(value.String())
+		} else {
+			data.Type = types.StringNull()
 		}
 		if value := res.Get("overridable"); value.Exists() && !data.Overridable.IsNull() {
 			data.Overridable = types.BoolValue(value.Bool())
@@ -362,6 +373,14 @@ func (data *NetworkGroups) fromBodyUnknowns(ctx context.Context, res gjson.Resul
 				v.Id = types.StringValue(value.String())
 			} else {
 				v.Id = types.StringNull()
+			}
+			data.Items[i] = v
+		}
+		if v := data.Items[i]; v.Type.IsUnknown() {
+			if value := r.Get("type"); value.Exists() {
+				v.Type = types.StringValue(value.String())
+			} else {
+				v.Type = types.StringNull()
 			}
 			data.Items[i] = v
 		}

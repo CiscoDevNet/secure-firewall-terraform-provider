@@ -34,6 +34,7 @@ func TestAccFmcDeviceIPv4StaticRoute(t *testing.T) {
 		t.Skip("skipping test, set environment variable TF_VAR_device_id")
 	}
 	var checks []resource.TestCheckFunc
+	checks = append(checks, resource.TestCheckResourceAttrSet("fmc_device_ipv4_static_route.test", "type"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_device_ipv4_static_route.test", "gateway_host_literal", "10.0.0.1"))
 
 	var steps []resource.TestStep

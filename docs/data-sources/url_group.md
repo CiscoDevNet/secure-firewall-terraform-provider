@@ -32,6 +32,7 @@ data "fmc_url_group" "example" {
 - `description` (String) Description of the object.
 - `literals` (Attributes Set) Set of literal values to be included in the URL group. (see [below for nested schema](#nestedatt--literals))
 - `overridable` (Boolean) Indicates whether object values can be overridden.
+- `type` (String) Type of the object; this value is always 'UrlGroup'.
 - `urls` (Attributes Set) Set of URL objects to be included in the URL group. (see [below for nested schema](#nestedatt--urls))
 
 <a id="nestedatt--literals"></a>

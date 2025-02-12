@@ -36,6 +36,7 @@ func TestAccFmcInterfaceGroup(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_interface_group.test", "name", "my_interface_group"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_interface_group.test", "interface_mode", "ROUTED"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("fmc_interface_group.test", "type"))
 
 	var steps []resource.TestStep
 	if os.Getenv("SKIP_MINIMUM_TEST") == "" {

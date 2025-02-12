@@ -47,6 +47,7 @@ resource "fmc_network_group" "example" {
 ### Read-Only
 
 - `id` (String) Id of the object
+- `type` (String) Type of the object; this value is always 'NetworkGroup'.
 
 <a id="nestedatt--literals"></a>
 ### Nested Schema for `literals`

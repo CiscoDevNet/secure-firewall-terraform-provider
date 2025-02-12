@@ -33,4 +33,4 @@ data "fmc_icmpv4_object" "example" {
 - `description` (String) Description of the object.
 - `icmp_type` (Number) ICMPv4 [type number](https://www.iana.org/assignments/icmp-parameters/icmp-parameters.xhtml).
 - `overridable` (Boolean) Indicates whether object values can be overridden.
-- `type` (String)
+- `type` (String) Type of the object; this value is always 'ICMPV4Object'.

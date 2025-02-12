@@ -84,9 +84,6 @@ func (data FQDNObjects) toBody(ctx context.Context, state FQDNObjects) string {
 			if !item.DnsResolution.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "dnsResolution", item.DnsResolution.ValueString())
 			}
-			if !item.Type.IsNull() {
-				itemBody, _ = sjson.Set(itemBody, "type", item.Type.ValueString())
-			}
 			body, _ = sjson.SetRaw(body, "items.-1", itemBody)
 		}
 	}
@@ -146,7 +143,7 @@ func (data *FQDNObjects) fromBody(ctx context.Context, res gjson.Result) {
 		if value := res.Get("type"); value.Exists() {
 			data.Type = types.StringValue(value.String())
 		} else {
-			data.Type = types.StringValue("FQDN")
+			data.Type = types.StringNull()
 		}
 		(*parent).Items[k] = data
 	}
@@ -203,7 +200,7 @@ func (data *FQDNObjects) fromBodyPartial(ctx context.Context, res gjson.Result) 
 		}
 		if value := res.Get("type"); value.Exists() && !data.Type.IsNull() {
 			data.Type = types.StringValue(value.String())
-		} else if data.Type.ValueString() != "FQDN" {
+		} else {
 			data.Type = types.StringNull()
 		}
 		(*parent).Items[i] = data
@@ -241,6 +238,14 @@ func (data *FQDNObjects) fromBodyUnknowns(ctx context.Context, res gjson.Result)
 				v.Id = types.StringValue(value.String())
 			} else {
 				v.Id = types.StringNull()
+			}
+			data.Items[i] = v
+		}
+		if v := data.Items[i]; v.Type.IsUnknown() {
+			if value := r.Get("type"); value.Exists() {
+				v.Type = types.StringValue(value.String())
+			} else {
+				v.Type = types.StringNull()
 			}
 			data.Items[i] = v
 		}

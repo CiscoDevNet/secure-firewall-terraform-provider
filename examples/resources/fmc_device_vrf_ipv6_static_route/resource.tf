@@ -8,6 +8,6 @@ resource "fmc_device_vrf_ipv6_static_route" "example" {
       id = "76d24097-41c4-4558-a4d0-a8c07ac08470"
     }
   ]
-  metric_value    = 254
-  gateway_literal = "2024::1"
+  metric_value         = 254
+  gateway_host_literal = "2024::1"
 }

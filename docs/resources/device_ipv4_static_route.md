@@ -50,6 +50,7 @@ resource "fmc_device_ipv4_static_route" "example" {
 ### Read-Only
 
 - `id` (String) Id of the object
+- `type` (String) Type of the object; this value is always 'IPv4StaticRoute'.
 
 <a id="nestedatt--destination_networks"></a>
 ### Nested Schema for `destination_networks`

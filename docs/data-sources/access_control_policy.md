@@ -43,6 +43,7 @@ data "fmc_access_control_policy" "example" {
 - `description` (String) Description of the Access Control Policy.
 - `prefilter_policy_id` (String) Id of the Prefilter Policy.
 - `rules` (Attributes List) Ordered list of Access Rules. Rules must be sorted in the order of the corresponding categories, if they have `category_name`. Uncategorized non-mandatory rules must be below all other rules. (see [below for nested schema](#nestedatt--rules))
+- `type` (String) Type of the object; this value is always 'AccessPolicy'.
 
 <a id="nestedatt--categories"></a>
 ### Nested Schema for `categories`

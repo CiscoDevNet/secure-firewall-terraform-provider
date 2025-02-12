@@ -33,6 +33,7 @@ import (
 func TestAccFmcAccessControlPolicy(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_access_control_policy.test", "name", "my_access_control_policy"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("fmc_access_control_policy.test", "type"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_access_control_policy.test", "description", "My Access Control Policy"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_access_control_policy.test", "default_action", "BLOCK"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_access_control_policy.test", "default_action_log_begin", "true"))

@@ -42,7 +42,7 @@ resource "fmc_device_vrf_ipv4_static_route" "example" {
 ### Optional
 
 - `domain` (String) Name of the FMC domain
-- `gateway_host_literal` (String) Next hop for this route as a literal IPv4 address. Exactly one of `gateway_object_id` or `gateway_literal` must be present.
+- `gateway_host_literal` (String) Next hop for this route as a literal IPv4 address. Exactly one of `gateway_host_object_id` or `gateway_host_literal` must be present.
 - `gateway_host_object_id` (String) Id of the next hop for this route. Exactly one of `gateway_host_object_id` or `gateway_host_literal` must be present.
 - `is_tunneled` (Boolean) Indicates whether this route is a separate default route for VPN traffic. Should be used for default route only (such as when the destination_networks points to a builtin network 'any-ipv4'). Useful if you want VPN traffic to use a different default route than non-VPN traffic. When a tunnel terminates on the device, all traffic from it that cannot be routed using learned or static routes is sent to this route. You can configure only one default tunneled gateway per device. ECMP for tunneled traffic is not supported. This attribute conflicts with `metric_value` attribute.
   - Default value: `false`
@@ -52,6 +52,7 @@ resource "fmc_device_vrf_ipv4_static_route" "example" {
 ### Read-Only
 
 - `id` (String) Id of the object
+- `type` (String) Type of the object; this value is always 'IPv4StaticRoute'.
 
 <a id="nestedatt--destination_networks"></a>
 ### Nested Schema for `destination_networks`

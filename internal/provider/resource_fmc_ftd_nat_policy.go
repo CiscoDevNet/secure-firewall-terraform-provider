@@ -93,6 +93,13 @@ func (r *FTDNATPolicyResource) Schema(ctx context.Context, req resource.SchemaRe
 				MarkdownDescription: helpers.NewAttributeDescription("Description of the object.").String,
 				Optional:            true,
 			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Type of the object; this value is always 'FTDNatPolicy'.").String,
+				Computed:            true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.UseStateForUnknown(),
+				},
+			},
 			"manual_nat_rules": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("The ordered list of manual NAT rules.").String,
 				Optional:            true,

@@ -78,6 +78,10 @@ func (d *DeviceVRFIPv4StaticRouteDataSource) Schema(ctx context.Context, req dat
 				MarkdownDescription: "Logical name of the parent interface. For transparent mode, any bridge group member interface. For routed mode with bridge groups, any bridge group member interface for the BVI name.",
 				Computed:            true,
 			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type of the object; this value is always 'IPv4StaticRoute'.",
+				Computed:            true,
+			},
 			"interface_id": schema.StringAttribute{
 				MarkdownDescription: "Id of the interface provided in `interface_logical_name`. The value is ignored, but the attribute itself is useful for ensuring that Terraform creates interface resource before the static route resource (and destroys the interface resource only after the static route has been destroyed).",
 				Computed:            true,
@@ -103,7 +107,7 @@ func (d *DeviceVRFIPv4StaticRouteDataSource) Schema(ctx context.Context, req dat
 				Computed:            true,
 			},
 			"gateway_host_literal": schema.StringAttribute{
-				MarkdownDescription: "Next hop for this route as a literal IPv4 address. Exactly one of `gateway_object_id` or `gateway_literal` must be present.",
+				MarkdownDescription: "Next hop for this route as a literal IPv4 address. Exactly one of `gateway_host_object_id` or `gateway_host_literal` must be present.",
 				Computed:            true,
 			},
 			"is_tunneled": schema.BoolAttribute{

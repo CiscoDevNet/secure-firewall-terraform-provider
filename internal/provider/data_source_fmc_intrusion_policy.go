@@ -80,6 +80,10 @@ func (d *IntrusionPolicyDataSource) Schema(ctx context.Context, req datasource.S
 				MarkdownDescription: "Description of the policy.",
 				Computed:            true,
 			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type of the object; this value is always 'intrusionpolicy'.",
+				Computed:            true,
+			},
 			"base_policy_id": schema.StringAttribute{
 				MarkdownDescription: "Id of the base policy.",
 				Computed:            true,

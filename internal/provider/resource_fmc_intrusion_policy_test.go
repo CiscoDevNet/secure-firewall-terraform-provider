@@ -33,6 +33,7 @@ func TestAccFmcIntrusionPolicy(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_intrusion_policy.test", "name", "my_intrusion_policy"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_intrusion_policy.test", "description", "My IPS Policy"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("fmc_intrusion_policy.test", "type"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_intrusion_policy.test", "inspection_mode", "PREVENTION"))
 
 	var steps []resource.TestStep

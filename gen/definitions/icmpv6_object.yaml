@@ -32,3 +32,7 @@ attributes:
     description: Indicates whether object values can be overridden.
     exclude_example: true
     test_value: "true"
+  - model_name: type
+    type: String
+    description: Type of the object; this value is always 'ICMPV6Object'.
+    computed: true

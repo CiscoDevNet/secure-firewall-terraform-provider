@@ -70,6 +70,7 @@ Optional:
 Read-Only:
 
 - `id` (String) Id of the managed URL Group.
+- `type` (String) Type of the object; this value is always 'UrlGroup'.
 
 <a id="nestedatt--items--urls"></a>
 ### Nested Schema for `items.urls`

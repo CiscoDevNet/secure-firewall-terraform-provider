@@ -26,6 +26,7 @@ import (
 
 	"github.com/CiscoDevNet/terraform-provider-fmc/internal/provider/helpers"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/resourcevalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -98,6 +99,13 @@ func (r *DeviceVRFIPv6StaticRouteResource) Schema(ctx context.Context, req resou
 				MarkdownDescription: helpers.NewAttributeDescription("Logical name of the parent interface. For transparent mode, any bridge group member interface. For routed mode with bridge groups, any bridge group member interface for the BVI name.").String,
 				Required:            true,
 			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Type of the object; this value is always 'IPv6StaticRoute'.").String,
+				Computed:            true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.UseStateForUnknown(),
+				},
+			},
 			"interface_id": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Id of the interface provided in `interface_logical_name`. The value is ignored, but the attribute itself is useful for ensuring that Terraform creates interface resource before the static route resource (and destroys the interface resource only after the static route has been destroyed).").String,
 				Required:            true,
@@ -121,12 +129,12 @@ func (r *DeviceVRFIPv6StaticRouteResource) Schema(ctx context.Context, req resou
 					int64validator.Between(1, 254),
 				},
 			},
-			"gateway_object_id": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Id of the next hop for this route. Exactly one of `gateway_object_id` or `gateway_literal` must be present.").String,
+			"gateway_host_object_id": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Id of the next hop for this route. Exactly one of `gateway_host_object_id` or `gateway_host_literal` must be present.").String,
 				Optional:            true,
 			},
-			"gateway_literal": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Next hop for this route as a literal IPv6 address. Exactly one of `gateway_object_id` or `gateway_literal` must be present.").String,
+			"gateway_host_literal": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Next hop for this route as a literal IPv6 address. Exactly one of `gateway_host_object_id` or `gateway_host_literal` must be present.").String,
 				Optional:            true,
 			},
 			"is_tunneled": schema.BoolAttribute{
@@ -343,3 +351,12 @@ func (r *DeviceVRFIPv6StaticRouteResource) ImportState(ctx context.Context, req 
 // Section below is generated&owned by "gen/generator.go". //template:begin updateSubresources
 
 // End of section. //template:end updateSubresources
+
+func (r DeviceVRFIPv6StaticRouteResource) ConfigValidators(ctx context.Context) []resource.ConfigValidator {
+	return []resource.ConfigValidator{
+		resourcevalidator.Conflicting(
+			path.MatchRoot("gateway_host_object_id"),
+			path.MatchRoot("gateway_host_literal"),
+		),
+	}
+}

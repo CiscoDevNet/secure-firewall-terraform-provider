@@ -104,6 +104,7 @@ resource "fmc_extended_acl" "example" {
 ### Read-Only
 
 - `id` (String) Id of the object
+- `type` (String) Type of the object; this value is always 'ExtendedAccessList'.
 
 <a id="nestedatt--entries"></a>
 ### Nested Schema for `entries`

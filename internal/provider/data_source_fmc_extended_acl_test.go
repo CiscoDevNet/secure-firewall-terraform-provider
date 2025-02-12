@@ -32,6 +32,7 @@ func TestAccDataSourceFmcExtendedACL(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_extended_acl.test", "name", "my_extended_acl"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_extended_acl.test", "description", "My Extended Access Control List"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("data.fmc_extended_acl.test", "type"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_extended_acl.test", "entries.0.action", "DENY"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_extended_acl.test", "entries.0.log_level", "WARNING"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_extended_acl.test", "entries.0.logging", "PER_ACCESS_LIST_ENTRY"))

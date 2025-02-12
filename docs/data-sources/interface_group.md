@@ -31,6 +31,7 @@ data "fmc_interface_group" "example" {
 
 - `interface_mode` (String) All interfaces' types must match the interface mode.
 - `interfaces` (Attributes Set) (see [below for nested schema](#nestedatt--interfaces))
+- `type` (String) Type of the object; this value is always 'InterfaceGroup'.
 
 <a id="nestedatt--interfaces"></a>
 ### Nested Schema for `interfaces`

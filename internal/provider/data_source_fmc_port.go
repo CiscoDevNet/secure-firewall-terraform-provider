@@ -92,6 +92,10 @@ func (d *PortDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 				MarkdownDescription: "Indicates whether object values can be overridden.",
 				Computed:            true,
 			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type of the object; this value is always 'ProtocolPortObject'.",
+				Computed:            true,
+			},
 		},
 	}
 }

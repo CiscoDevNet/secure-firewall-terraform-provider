@@ -13,6 +13,10 @@ attributes:
     type: String
     description: Description of the ojbect.
     example: "My Network Group 1"
+  - model_name: type
+    type: String
+    description: Type of the object; this value is always 'NetworkGroup'.
+    computed: true
   - model_name: overridable
     type: Bool
     description: Indicates whether object values can be overridden.

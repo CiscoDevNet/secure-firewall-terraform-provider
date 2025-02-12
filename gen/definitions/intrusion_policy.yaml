@@ -13,6 +13,10 @@ attributes:
     type: String
     description: Description of the policy.
     example: "My IPS Policy"
+  - model_name: type
+    type: String
+    description: Type of the object; this value is always 'intrusionpolicy'.
+    computed: true
   - model_name: id
     data_path: [basePolicy]
     tf_name: base_policy_id

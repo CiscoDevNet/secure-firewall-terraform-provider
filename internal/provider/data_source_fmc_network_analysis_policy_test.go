@@ -32,6 +32,7 @@ func TestAccDataSourceFmcNetworkAnalysisPolicy(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_network_analysis_policy.test", "name", "my_network_analysis_policy"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_network_analysis_policy.test", "description", "My network analysis policy"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("data.fmc_network_analysis_policy.test", "type"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_network_analysis_policy.test", "inspection_mode", "PREVENTION"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },

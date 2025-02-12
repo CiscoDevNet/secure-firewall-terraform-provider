@@ -34,7 +34,8 @@ func TestAccFmcDeviceIPv6StaticRoute(t *testing.T) {
 		t.Skip("skipping test, set environment variable TF_VAR_device_id")
 	}
 	var checks []resource.TestCheckFunc
-	checks = append(checks, resource.TestCheckResourceAttr("fmc_device_ipv6_static_route.test", "gateway_literal", "2024::1"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("fmc_device_ipv6_static_route.test", "type"))
+	checks = append(checks, resource.TestCheckResourceAttr("fmc_device_ipv6_static_route.test", "gateway_host_literal", "2024::1"))
 
 	var steps []resource.TestStep
 	if os.Getenv("SKIP_MINIMUM_TEST") == "" {
@@ -88,7 +89,7 @@ func testAccFmcDeviceIPv6StaticRouteConfig_minimum() string {
 	config += `		id = data.fmc_host.test.id` + "\n"
 	config += `	}]` + "\n"
 	config += `	metric_value = 254` + "\n"
-	config += `	gateway_literal = "2024::2"` + "\n"
+	config += `	gateway_host_literal = "2024::2"` + "\n"
 	config += `}` + "\n"
 	return config
 }
@@ -106,7 +107,7 @@ func testAccFmcDeviceIPv6StaticRouteConfig_all() string {
 	config += `		id = data.fmc_host.test.id` + "\n"
 	config += `	}]` + "\n"
 	config += `	metric_value = null` + "\n"
-	config += `	gateway_literal = "2024::1"` + "\n"
+	config += `	gateway_host_literal = "2024::1"` + "\n"
 	config += `	is_tunneled = true` + "\n"
 	config += `}` + "\n"
 	return config

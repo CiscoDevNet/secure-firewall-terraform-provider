@@ -33,6 +33,7 @@ func TestAccDataSourceFmcRange(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_range.test", "name", "my_range"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_range.test", "ip_range", "10.0.0.1-10.0.0.9"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_range.test", "description", "My range"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("data.fmc_range.test", "type"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,

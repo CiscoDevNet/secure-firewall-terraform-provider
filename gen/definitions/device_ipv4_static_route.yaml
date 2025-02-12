@@ -20,6 +20,10 @@ attributes:
     mandatory: true
     example: myinterface-0-1
     test_value: fmc_device_physical_interface.test.logical_name
+  - model_name: type
+    type: String
+    description: Type of the object; this value is always 'IPv4StaticRoute'.
+    computed: true
   - model_name: parent # dummy
     data_path: [links]
     tf_name: interface_id

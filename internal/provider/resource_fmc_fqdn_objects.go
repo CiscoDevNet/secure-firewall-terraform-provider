@@ -119,10 +119,11 @@ func (r *FQDNObjectsResource) Schema(ctx context.Context, req resource.SchemaReq
 							Default: stringdefault.StaticString("IPV4_AND_IPV6"),
 						},
 						"type": schema.StringAttribute{
-							MarkdownDescription: helpers.NewAttributeDescription("Type of the object; this value is always 'FQDN'.").AddDefaultValueDescription("FQDN").String,
-							Optional:            true,
+							MarkdownDescription: helpers.NewAttributeDescription("Type of the object; this value is always 'FQDN'.").String,
 							Computed:            true,
-							Default:             stringdefault.StaticString("FQDN"),
+							PlanModifiers: []planmodifier.String{
+								stringplanmodifier.UseStateForUnknown(),
+							},
 						},
 					},
 				},

@@ -33,6 +33,7 @@ func TestAccFmcNetworkAnalysisPolicy(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_network_analysis_policy.test", "name", "my_network_analysis_policy"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_network_analysis_policy.test", "description", "My network analysis policy"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("fmc_network_analysis_policy.test", "type"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_network_analysis_policy.test", "inspection_mode", "PREVENTION"))
 
 	var steps []resource.TestStep

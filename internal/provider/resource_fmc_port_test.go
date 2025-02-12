@@ -35,6 +35,7 @@ func TestAccFmcPort(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_port.test", "name", "my_port"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_port.test", "protocol", "TCP"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_port.test", "description", "Port TCP/443 (HTTPS)"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("fmc_port.test", "type"))
 
 	var steps []resource.TestStep
 	if os.Getenv("SKIP_MINIMUM_TEST") == "" {

@@ -33,6 +33,7 @@ func TestAccDataSourceFmcURL(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_url.test", "name", "my_url"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_url.test", "url", "https://www.example.com/app"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_url.test", "description", "My URL"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("data.fmc_url.test", "type"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,

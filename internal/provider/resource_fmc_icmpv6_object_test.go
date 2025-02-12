@@ -35,6 +35,7 @@ func TestAccFmcICMPv6Object(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_icmpv6_object.test", "code", "3"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_icmpv6_object.test", "name", "my_icmpv6_object"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_icmpv6_object.test", "description", "ICMPv6 address unreachable response, type 1, code 3"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("fmc_icmpv6_object.test", "type"))
 
 	var steps []resource.TestStep
 	if os.Getenv("SKIP_MINIMUM_TEST") == "" {

@@ -92,6 +92,10 @@ func (d *FQDNObjectDataSource) Schema(ctx context.Context, req datasource.Schema
 				MarkdownDescription: "Indicates whether object values can be overridden.",
 				Computed:            true,
 			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type of the object; this value is always 'FQDN'.",
+				Computed:            true,
+			},
 		},
 	}
 }

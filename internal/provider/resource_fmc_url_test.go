@@ -34,6 +34,7 @@ func TestAccFmcURL(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_url.test", "name", "my_url"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_url.test", "url", "https://www.example.com/app"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_url.test", "description", "My URL"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("fmc_url.test", "type"))
 
 	var steps []resource.TestStep
 	if os.Getenv("SKIP_MINIMUM_TEST") == "" {

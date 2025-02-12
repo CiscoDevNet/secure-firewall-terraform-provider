@@ -106,7 +106,7 @@ func (r *ICMPv4ObjectResource) Schema(ctx context.Context, req resource.SchemaRe
 				Optional:            true,
 			},
 			"type": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("").String,
+				MarkdownDescription: helpers.NewAttributeDescription("Type of the object; this value is always 'ICMPV4Object'.").String,
 				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),

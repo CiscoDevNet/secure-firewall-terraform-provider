@@ -41,4 +41,5 @@ Read-Only:
 - `description` (String) Description of the object.
 - `id` (String) Id of the managed URL object.
 - `overridable` (Boolean) Indicates whether object values can be overridden.
+- `type` (String) Type of the object; this value is always 'Url'.
 - `url` (String) URL value.

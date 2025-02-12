@@ -60,12 +60,11 @@ Optional:
   - Choices: `IPV4_ONLY`, `IPV6_ONLY`, `IPV4_AND_IPV6`
   - Default value: `IPV4_AND_IPV6`
 - `overridable` (Boolean) Indicates whether object values can be overridden.
-- `type` (String) Type of the object; this value is always 'FQDN'.
-  - Default value: `FQDN`
 
 Read-Only:
 
 - `id` (String) Id of the managed object.
+- `type` (String) Type of the object; this value is always 'FQDN'.
 
 ## Import
 

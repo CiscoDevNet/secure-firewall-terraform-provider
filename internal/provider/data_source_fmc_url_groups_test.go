@@ -32,6 +32,7 @@ func TestAccDataSourceFmcURLGroups(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttrSet("data.fmc_url_groups.test", "items.url_group_1.id"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_url_groups.test", "items.url_group_1.description", "My URL group"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("data.fmc_url_groups.test", "items.url_group_1.type"))
 	checks = append(checks, resource.TestCheckResourceAttrSet("data.fmc_url_groups.test", "items.url_group_1.urls.0.id"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_url_groups.test", "items.url_group_1.literals.0.url", "https://www.example.com/app"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_url_groups.test", "items.url_group_1.literals.0.url", "https://www.example.com/app"))

@@ -80,6 +80,10 @@ func (d *URLGroupDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 				MarkdownDescription: "Description of the object.",
 				Computed:            true,
 			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type of the object; this value is always 'UrlGroup'.",
+				Computed:            true,
+			},
 			"overridable": schema.BoolAttribute{
 				MarkdownDescription: "Indicates whether object values can be overridden.",
 				Computed:            true,

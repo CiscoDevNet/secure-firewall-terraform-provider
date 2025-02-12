@@ -33,6 +33,7 @@ func TestAccFmcFTDNATPolicy(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_ftd_nat_policy.test", "name", "my_ftd_nat_policy"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_ftd_nat_policy.test", "description", "My nat policy"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("fmc_ftd_nat_policy.test", "type"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_ftd_nat_policy.test", "manual_nat_rules.0.description", "My manual nat rule 1"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_ftd_nat_policy.test", "manual_nat_rules.0.enabled", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_ftd_nat_policy.test", "manual_nat_rules.0.section", "BEFORE_AUTO"))

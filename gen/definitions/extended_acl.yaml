@@ -14,6 +14,10 @@ attributes:
     type: String
     description: Description of the Extended ACL.
     example: "My Extended Access Control List"
+  - model_name: type
+    type: String
+    description: Type of the object; this value is always 'ExtendedAccessList'.
+    computed: true
   - model_name: entries
     type: List
     description: Ordered list of ACL's entries.

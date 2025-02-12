@@ -36,6 +36,7 @@ func TestAccFmcFQDNObjects(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_fqdn_objects.test", "items.my_fqdn_objects.overridable", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_fqdn_objects.test", "items.my_fqdn_objects.fqdn", "www.example.com"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_fqdn_objects.test", "items.my_fqdn_objects.dns_resolution", "IPV4_AND_IPV6"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("fmc_fqdn_objects.test", "items.my_fqdn_objects.type"))
 
 	var steps []resource.TestStep
 	if os.Getenv("SKIP_MINIMUM_TEST") == "" {

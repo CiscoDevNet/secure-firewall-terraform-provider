@@ -39,11 +39,12 @@ type DeviceIPv6StaticRoute struct {
 	Domain               types.String                               `tfsdk:"domain"`
 	DeviceId             types.String                               `tfsdk:"device_id"`
 	InterfaceLogicalName types.String                               `tfsdk:"interface_logical_name"`
+	Type                 types.String                               `tfsdk:"type"`
 	InterfaceId          types.String                               `tfsdk:"interface_id"`
 	DestinationNetworks  []DeviceIPv6StaticRouteDestinationNetworks `tfsdk:"destination_networks"`
 	MetricValue          types.Int64                                `tfsdk:"metric_value"`
-	GatewayObjectId      types.String                               `tfsdk:"gateway_object_id"`
-	GatewayLiteral       types.String                               `tfsdk:"gateway_literal"`
+	GatewayHostObjectId  types.String                               `tfsdk:"gateway_host_object_id"`
+	GatewayHostLiteral   types.String                               `tfsdk:"gateway_host_literal"`
 	IsTunneled           types.Bool                                 `tfsdk:"is_tunneled"`
 }
 
@@ -87,11 +88,11 @@ func (data DeviceIPv6StaticRoute) toBody(ctx context.Context, state DeviceIPv6St
 	if !data.MetricValue.IsNull() {
 		body, _ = sjson.Set(body, "metricValue", data.MetricValue.ValueInt64())
 	}
-	if !data.GatewayObjectId.IsNull() {
-		body, _ = sjson.Set(body, "gateway.object.id", data.GatewayObjectId.ValueString())
+	if !data.GatewayHostObjectId.IsNull() {
+		body, _ = sjson.Set(body, "gateway.object.id", data.GatewayHostObjectId.ValueString())
 	}
-	if !data.GatewayLiteral.IsNull() {
-		body, _ = sjson.Set(body, "gateway.literal.value", data.GatewayLiteral.ValueString())
+	if !data.GatewayHostLiteral.IsNull() {
+		body, _ = sjson.Set(body, "gateway.literal.value", data.GatewayHostLiteral.ValueString())
 	}
 	if !data.IsTunneled.IsNull() {
 		body, _ = sjson.Set(body, "isTunneled", data.IsTunneled.ValueBool())
@@ -108,6 +109,11 @@ func (data *DeviceIPv6StaticRoute) fromBody(ctx context.Context, res gjson.Resul
 		data.InterfaceLogicalName = types.StringValue(value.String())
 	} else {
 		data.InterfaceLogicalName = types.StringNull()
+	}
+	if value := res.Get("type"); value.Exists() {
+		data.Type = types.StringValue(value.String())
+	} else {
+		data.Type = types.StringNull()
 	}
 	if value := res.Get("selectedNetworks"); value.Exists() {
 		data.DestinationNetworks = make([]DeviceIPv6StaticRouteDestinationNetworks, 0)
@@ -129,14 +135,14 @@ func (data *DeviceIPv6StaticRoute) fromBody(ctx context.Context, res gjson.Resul
 		data.MetricValue = types.Int64Null()
 	}
 	if value := res.Get("gateway.object.id"); value.Exists() {
-		data.GatewayObjectId = types.StringValue(value.String())
+		data.GatewayHostObjectId = types.StringValue(value.String())
 	} else {
-		data.GatewayObjectId = types.StringNull()
+		data.GatewayHostObjectId = types.StringNull()
 	}
 	if value := res.Get("gateway.literal.value"); value.Exists() {
-		data.GatewayLiteral = types.StringValue(value.String())
+		data.GatewayHostLiteral = types.StringValue(value.String())
 	} else {
-		data.GatewayLiteral = types.StringNull()
+		data.GatewayHostLiteral = types.StringNull()
 	}
 	if value := res.Get("isTunneled"); value.Exists() {
 		data.IsTunneled = types.BoolValue(value.Bool())
@@ -158,6 +164,11 @@ func (data *DeviceIPv6StaticRoute) fromBodyPartial(ctx context.Context, res gjso
 		data.InterfaceLogicalName = types.StringValue(value.String())
 	} else {
 		data.InterfaceLogicalName = types.StringNull()
+	}
+	if value := res.Get("type"); value.Exists() && !data.Type.IsNull() {
+		data.Type = types.StringValue(value.String())
+	} else {
+		data.Type = types.StringNull()
 	}
 	for i := 0; i < len(data.DestinationNetworks); i++ {
 		keys := [...]string{"id"}
@@ -207,15 +218,15 @@ func (data *DeviceIPv6StaticRoute) fromBodyPartial(ctx context.Context, res gjso
 	} else {
 		data.MetricValue = types.Int64Null()
 	}
-	if value := res.Get("gateway.object.id"); value.Exists() && !data.GatewayObjectId.IsNull() {
-		data.GatewayObjectId = types.StringValue(value.String())
+	if value := res.Get("gateway.object.id"); value.Exists() && !data.GatewayHostObjectId.IsNull() {
+		data.GatewayHostObjectId = types.StringValue(value.String())
 	} else {
-		data.GatewayObjectId = types.StringNull()
+		data.GatewayHostObjectId = types.StringNull()
 	}
-	if value := res.Get("gateway.literal.value"); value.Exists() && !data.GatewayLiteral.IsNull() {
-		data.GatewayLiteral = types.StringValue(value.String())
+	if value := res.Get("gateway.literal.value"); value.Exists() && !data.GatewayHostLiteral.IsNull() {
+		data.GatewayHostLiteral = types.StringValue(value.String())
 	} else {
-		data.GatewayLiteral = types.StringNull()
+		data.GatewayHostLiteral = types.StringNull()
 	}
 	if value := res.Get("isTunneled"); value.Exists() && !data.IsTunneled.IsNull() {
 		data.IsTunneled = types.BoolValue(value.Bool())
@@ -231,6 +242,13 @@ func (data *DeviceIPv6StaticRoute) fromBodyPartial(ctx context.Context, res gjso
 // fromBodyUnknowns updates the Unknown Computed tfstate values from a JSON.
 // Known values are not changed (usual for Computed attributes with UseStateForUnknown or with Default).
 func (data *DeviceIPv6StaticRoute) fromBodyUnknowns(ctx context.Context, res gjson.Result) {
+	if data.Type.IsUnknown() {
+		if value := res.Get("type"); value.Exists() {
+			data.Type = types.StringValue(value.String())
+		} else {
+			data.Type = types.StringNull()
+		}
+	}
 }
 
 // End of section. //template:end fromBodyUnknowns

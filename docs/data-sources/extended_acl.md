@@ -31,6 +31,7 @@ data "fmc_extended_acl" "example" {
 
 - `description` (String) Description of the Extended ACL.
 - `entries` (Attributes List) Ordered list of ACL's entries. (see [below for nested schema](#nestedatt--entries))
+- `type` (String) Type of the object; this value is always 'ExtendedAccessList'.
 
 <a id="nestedatt--entries"></a>
 ### Nested Schema for `entries`

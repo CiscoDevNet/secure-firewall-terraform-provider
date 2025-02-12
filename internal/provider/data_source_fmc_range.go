@@ -88,6 +88,10 @@ func (d *RangeDataSource) Schema(ctx context.Context, req datasource.SchemaReque
 				MarkdownDescription: "Indicates whether object values can be overridden.",
 				Computed:            true,
 			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type of the object; this value is always 'Range'.",
+				Computed:            true,
+			},
 		},
 	}
 }

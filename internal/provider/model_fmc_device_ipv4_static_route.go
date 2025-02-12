@@ -39,6 +39,7 @@ type DeviceIPv4StaticRoute struct {
 	Domain               types.String                               `tfsdk:"domain"`
 	DeviceId             types.String                               `tfsdk:"device_id"`
 	InterfaceLogicalName types.String                               `tfsdk:"interface_logical_name"`
+	Type                 types.String                               `tfsdk:"type"`
 	InterfaceId          types.String                               `tfsdk:"interface_id"`
 	DestinationNetworks  []DeviceIPv4StaticRouteDestinationNetworks `tfsdk:"destination_networks"`
 	MetricValue          types.Int64                                `tfsdk:"metric_value"`
@@ -109,6 +110,11 @@ func (data *DeviceIPv4StaticRoute) fromBody(ctx context.Context, res gjson.Resul
 	} else {
 		data.InterfaceLogicalName = types.StringNull()
 	}
+	if value := res.Get("type"); value.Exists() {
+		data.Type = types.StringValue(value.String())
+	} else {
+		data.Type = types.StringNull()
+	}
 	if value := res.Get("selectedNetworks"); value.Exists() {
 		data.DestinationNetworks = make([]DeviceIPv4StaticRouteDestinationNetworks, 0)
 		value.ForEach(func(k, res gjson.Result) bool {
@@ -158,6 +164,11 @@ func (data *DeviceIPv4StaticRoute) fromBodyPartial(ctx context.Context, res gjso
 		data.InterfaceLogicalName = types.StringValue(value.String())
 	} else {
 		data.InterfaceLogicalName = types.StringNull()
+	}
+	if value := res.Get("type"); value.Exists() && !data.Type.IsNull() {
+		data.Type = types.StringValue(value.String())
+	} else {
+		data.Type = types.StringNull()
 	}
 	for i := 0; i < len(data.DestinationNetworks); i++ {
 		keys := [...]string{"id"}
@@ -231,6 +242,13 @@ func (data *DeviceIPv4StaticRoute) fromBodyPartial(ctx context.Context, res gjso
 // fromBodyUnknowns updates the Unknown Computed tfstate values from a JSON.
 // Known values are not changed (usual for Computed attributes with UseStateForUnknown or with Default).
 func (data *DeviceIPv4StaticRoute) fromBodyUnknowns(ctx context.Context, res gjson.Result) {
+	if data.Type.IsUnknown() {
+		if value := res.Get("type"); value.Exists() {
+			data.Type = types.StringValue(value.String())
+		} else {
+			data.Type = types.StringNull()
+		}
+	}
 }
 
 // End of section. //template:end fromBodyUnknowns

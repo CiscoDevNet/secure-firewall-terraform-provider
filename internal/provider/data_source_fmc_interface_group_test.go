@@ -36,6 +36,7 @@ func TestAccDataSourceFmcInterfaceGroup(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_interface_group.test", "name", "my_interface_group"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_interface_group.test", "interface_mode", "ROUTED"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("data.fmc_interface_group.test", "type"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,

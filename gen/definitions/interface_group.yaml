@@ -16,6 +16,10 @@ attributes:
     enum_values: [INLINE, SWITCHED, ROUTED]
     mandatory: true
     example: ROUTED
+  - model_name: type
+    type: String
+    description: Type of the object; this value is always 'InterfaceGroup'.
+    computed: true
   - model_name: interfaces
     type: Set
     attributes:

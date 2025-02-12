@@ -92,6 +92,10 @@ func (d *ICMPv6ObjectDataSource) Schema(ctx context.Context, req datasource.Sche
 				MarkdownDescription: "Indicates whether object values can be overridden.",
 				Computed:            true,
 			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type of the object; this value is always 'ICMPV6Object'.",
+				Computed:            true,
+			},
 		},
 	}
 }

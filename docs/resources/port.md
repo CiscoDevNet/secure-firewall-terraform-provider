@@ -39,6 +39,7 @@ resource "fmc_port" "example" {
 ### Read-Only
 
 - `id` (String) Id of the object
+- `type` (String) Type of the object; this value is always 'ProtocolPortObject'.
 
 ## Import
 

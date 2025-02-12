@@ -77,6 +77,10 @@ func (d *AccessControlPolicyDataSource) Schema(ctx context.Context, req datasour
 				Optional:            true,
 				Computed:            true,
 			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type of the object; this value is always 'AccessPolicy'.",
+				Computed:            true,
+			},
 			"description": schema.StringAttribute{
 				MarkdownDescription: "Description of the Access Control Policy.",
 				Computed:            true,

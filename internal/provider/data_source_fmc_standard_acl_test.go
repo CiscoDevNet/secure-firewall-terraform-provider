@@ -32,6 +32,7 @@ func TestAccDataSourceFmcStandardACL(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_standard_acl.test", "name", "my_standard_acl"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_standard_acl.test", "description", "My standard ACL"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("data.fmc_standard_acl.test", "type"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_standard_acl.test", "entries.0.action", "DENY"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_standard_acl.test", "entries.0.literals.0.value", "10.1.1.0/24"))
 	resource.Test(t, resource.TestCase{

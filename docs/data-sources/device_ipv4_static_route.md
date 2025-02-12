@@ -40,6 +40,7 @@ data "fmc_device_ipv4_static_route" "example" {
 - `interface_logical_name` (String) Logical name of the parent interface. For transparent mode, any bridge group member interface. For routed mode with bridge groups, any bridge group member interface for the BVI name.
 - `is_tunneled` (Boolean) Indicates whether this route is a separate default route for VPN traffic. Should be used for default route only (such as when the destination_networks points to a builtin network 'any-ipv4'). Useful if you want VPN traffic to use a different default route than non-VPN traffic. When a tunnel terminates on the device, all traffic from it that cannot be routed using learned or static routes is sent to this route. You can configure only one default tunneled gateway per device. ECMP for tunneled traffic is not supported. This attribute conflicts with `metric_value` attribute.
 - `metric_value` (Number) The cost of the route. The metric is used to compare routes among different routing protocols. The default administrative distance for static routes is 1, giving it precedence over routes discovered by dynamic routing protocols but not directly connected routes.
+- `type` (String) Type of the object; this value is always 'IPv4StaticRoute'.
 
 <a id="nestedatt--destination_networks"></a>
 ### Nested Schema for `destination_networks`

@@ -61,7 +61,7 @@ Optional:
 Read-Only:
 
 - `id` (String) Id of the managed ICMPv4 object.
-- `type` (String)
+- `type` (String) Type of the object; this value is always 'ICMPV4Object'.
 
 ## Import
 

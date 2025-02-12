@@ -34,6 +34,7 @@ func TestAccFmcNetworkGroups(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttrSet("fmc_network_groups.test", "items.my_network_groups.id"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_network_groups.test", "items.my_network_groups.description", "My Network Group 1"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("fmc_network_groups.test", "items.my_network_groups.type"))
 	checks = append(checks, resource.TestCheckResourceAttr("fmc_network_groups.test", "items.my_network_groups.literals.0.value", "10.1.1.0/24"))
 
 	var steps []resource.TestStep

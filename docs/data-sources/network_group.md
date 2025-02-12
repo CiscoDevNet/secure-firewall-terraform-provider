@@ -33,6 +33,7 @@ data "fmc_network_group" "example" {
 - `literals` (Attributes Set) Set of literal values (Host or Network). (see [below for nested schema](#nestedatt--literals))
 - `objects` (Attributes Set) Set of network objects (Host, Network, Range, FQDN or Network Group). (see [below for nested schema](#nestedatt--objects))
 - `overridable` (Boolean) Indicates whether object values can be overridden.
+- `type` (String) Type of the object; this value is always 'NetworkGroup'.
 
 <a id="nestedatt--literals"></a>
 ### Nested Schema for `literals`

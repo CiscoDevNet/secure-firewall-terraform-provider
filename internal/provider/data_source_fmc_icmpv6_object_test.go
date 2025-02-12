@@ -34,6 +34,7 @@ func TestAccDataSourceFmcICMPv6Object(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_icmpv6_object.test", "code", "3"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_icmpv6_object.test", "name", "my_icmpv6_object"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_icmpv6_object.test", "description", "ICMPv6 address unreachable response, type 1, code 3"))
+	checks = append(checks, resource.TestCheckResourceAttrSet("data.fmc_icmpv6_object.test", "type"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,

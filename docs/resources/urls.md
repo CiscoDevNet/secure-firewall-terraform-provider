@@ -60,6 +60,7 @@ Optional:
 Read-Only:
 
 - `id` (String) Id of the managed URL object.
+- `type` (String) Type of the object; this value is always 'Url'.
 
 ## Import
 

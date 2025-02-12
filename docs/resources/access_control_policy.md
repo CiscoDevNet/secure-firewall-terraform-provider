@@ -186,6 +186,7 @@ resource "fmc_access_control_policy" "example" {
 
 - `default_action_id` (String) Id of the default action.
 - `id` (String) Id of the object
+- `type` (String) Type of the object; this value is always 'AccessPolicy'.
 
 <a id="nestedatt--categories"></a>
 ### Nested Schema for `categories`
