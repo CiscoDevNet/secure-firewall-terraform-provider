@@ -200,7 +200,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 				{{- end}}
 				{{- if or .Id .Reference .RequiresReplace (and .Computed (not .ComputedRefreshValue))}}
 				PlanModifiers: []planmodifier.{{.Type}}{
-					{{- if or .Id .Reference .RequiresReplace}}
+					{{- if or .Id .Reference (and .RequiresReplace (not $.IsBulk))}}
 					{{snakeCase .Type}}planmodifier.RequiresReplace(),
 					{{end}}
 					{{- if and .Computed (not .ComputedRefreshValue)}}
@@ -210,6 +210,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 				{{- end}}
 				{{- if isNestedListMapSet .}}
 				{{- $useStateForUnknown := isNestedMap .}}
+				{{- $itemsList := .}}
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						{{- range  .Attributes}}
@@ -281,9 +282,19 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 							{{- end}}
 							{{- if or (and .ResourceId $useStateForUnknown) (and .Computed (not .ComputedRefreshValue))}}
 							PlanModifiers: []planmodifier.{{.Type}}{
+								{{- if and $.IsBulk (eq .TfName "id") (hasRequiresReplace $.Attributes) }}
+								{{- if eq .Type "String"}}
+								{{- range $itemsList.Attributes }}
+								{{- if .RequiresReplace}}
+								planmodifiers.ConditionalUseStateForUnknownString("{{.TfName}}"),
+								{{- end}}
+								{{- end }}
+								{{- end}}
+								{{- else}}
 								{{snakeCase .Type}}planmodifier.UseStateForUnknown(),
+								{{- end}}
 							},
-							{{- else if .RequiresReplace}}
+							{{- else if and .RequiresReplace (not $.IsBulk)}}
 							PlanModifiers: []planmodifier.{{.Type}}{
 								{{snakeCase .Type}}planmodifier.RequiresReplace(),
 							},
@@ -360,7 +371,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 										{{- end}}
 										{{- if or .RequiresReplace .Computed}}
 										PlanModifiers: []planmodifier.{{.Type}}{
-											{{- if .RequiresReplace}}
+											{{- if and .RequiresReplace (not $.IsBulk)}}
 											{{snakeCase .Type}}planmodifier.RequiresReplace(),
 											{{end}}
 											{{- if and .Computed (not .ComputedRefreshValue)}}
@@ -440,7 +451,7 @@ func (r *{{camelCase .Name}}Resource) Schema(ctx context.Context, req resource.S
 													{{- end}}
 													{{- if or .RequiresReplace .Computed}}
 													PlanModifiers: []planmodifier.{{.Type}}{
-														{{- if .RequiresReplace}}
+														{{- if and .RequiresReplace (not $.IsBulk)}}
 														{{snakeCase .Type}}planmodifier.RequiresReplace(),
 														{{end}}
 														{{- if and .Computed (not .ComputedRefreshValue)}}
@@ -758,10 +769,19 @@ func (r *{{camelCase .Name}}Resource) Update(ctx context.Context, req resource.U
 
 	{{- if .IsBulk}}
 
+	{{- if hasRequiresReplace $.Attributes}}
+	// Get objects that need to be replaced due to `requires_replace` flag
+	toBeReplaced := plan.findObjectsToBeReplaced(ctx, state)
+	{{- end}}
+
 	// DELETE
 	// Delete objects (that are present in state, but missing in plan)
+	{{- if hasRequiresReplace $.Attributes}}
+	toDelete := toBeReplaced.Clone()
+	{{- else}}
 	var toDelete {{camelCase .Name}}
 	toDelete.Items = make(map[string]{{camelCase .Name}}Items)
+	{{- end}}
 	planOwnedIDs := make(map[string]string, len(plan.Items))
 
 	// Prepare list of ID that are in plan
@@ -790,8 +810,13 @@ func (r *{{camelCase .Name}}Resource) Update(ctx context.Context, req resource.U
 
 	// CREATE
 	// Create new objects (objects that have missing IDs in plan)
+	{{- if hasRequiresReplace $.Attributes}}
+	toCreate := toBeReplaced.Clone()
+	toCreate.clearItemsIds(ctx)
+	{{- else}}
 	var toCreate {{camelCase .Name}}
 	toCreate.Items = make(map[string]{{camelCase .Name}}Items)
+	{{- end}}
 	// Scan plan for items with no ID
 	for k, v := range plan.Items {
 		if v.Id.IsUnknown() || v.Id.IsNull() {
@@ -817,7 +842,18 @@ func (r *{{camelCase .Name}}Resource) Update(ctx context.Context, req resource.U
 	var toUpdate {{camelCase .Name}}
 	toUpdate.Items = make(map[string]{{camelCase .Name}}Items)
 
+	{{- if hasRequiresReplace $.Attributes}}
+
+	for tmp, valueState := range state.Items {
+		// Check if the ID from state is on toBeReplaced list
+		if _, ok := toBeReplaced.Items[tmp]; ok {
+			// If it is, skip it as it was handled by delete/create processes
+			continue
+		}
+	{{- else }}
+	
 	for _, valueState := range state.Items {
+	{{- end}}
 
 		// Check if the ID from plan exists on list of ID owned by state
 		if keyState, ok := planOwnedIDs[valueState.Id.ValueString()]; ok {

@@ -534,57 +534,6 @@ func (data *{{camelCase .Name}}) fromBodyUnknowns(ctx context.Context, res gjson
 }
 
 // End of section. //template:end fromBodyUnknowns
-{{- range .Attributes}}
-	{{- if isNestedMap .}}
-		{{- $found := false }}
-		{{- range .Attributes }}
-			{{- if and (eq .ModelName "id") (eq .TfName "id") .ResourceId}}
-				{{- $found = true }}
-			{{- end}}
-		{{- end}}
-		{{- if not $found }}
-			{{- errorf "type Map with attributes has a limitation for now: it must always contain attribute with `model_name: id` and `tf_name: id` and `resource_id: true`, because it must always be used to track subresources."}}
-		{{- end}}
-	{{- end}}
-	{{- range .Attributes}}
-		{{- if isNestedMap .}}
-			{{- errorf "Map not yet implemented at this depth"}}
-		{{- end}}
-		{{- if .OrderedList }}
-			{{- errorf "ordered_list not yet implemented at this depth"}}
-		{{- end}}
-		{{- if hasResourceId .Attributes}}
-			{{- errorf "resource_id not yet implemented at this depth"}}
-		{{- end}}
-
-		{{- range .Attributes}}
-			{{- if isNestedMap .}}
-				{{- errorf "Map not yet implemented at this depth"}}
-			{{- end}}
-			{{- if .OrderedList }}
-				{{- errorf "ordered_list not yet implemented at this depth"}}
-			{{- end}}
-			{{- if hasResourceId .Attributes}}
-				{{- errorf "resource_id not yet implemented at this depth"}}
-			{{- end}}
-
-			{{- range .Attributes}}
-				{{- if isNestedMap .}}
-					{{- errorf "Map not yet implemented at this depth"}}
-				{{- end}}
-				{{- if .OrderedList }}
-					{{- errorf "ordered_list not yet implemented at this depth"}}
-				{{- end}}
-				{{- if hasResourceId .Attributes}}
-					{{- errorf "resource_id not yet implemented at this depth"}}
-				{{- end}}
-				{{- range .Attributes}}
-					{{- errorf "attributes not yet implemented at this depth"}}
-				{{- end}}
-			{{- end}}
-		{{- end}}
-	{{- end}}
-{{- end}}
 
 // Section below is generated&owned by "gen/generator.go". //template:begin Clone
 
@@ -618,3 +567,118 @@ func (data {{camelCase .Name}}) toBodyNonBulk(ctx context.Context, state {{camel
 {{- end}}
 
 // End of section. //template:end toBodyNonBulk
+
+// Section below is generated&owned by "gen/generator.go". //template:begin findObjectsToBeReplaced
+
+{{if and .IsBulk (hasRequiresReplace .Attributes) }}
+// Check if single object within bulk requires replace due to `requires_replace`
+// Since here we assume object has changed, it must be present in both state and plan (data)
+func (data {{camelCase .Name}}) findObjectsToBeReplaced(ctx context.Context, state {{camelCase .Name}}) {{camelCase .Name}} {
+	// Prepare empty object to be filled in with objects that require replace
+	var toBeReplaced {{camelCase .Name}}
+	toBeReplaced.Items = make(map[string]{{camelCase .Name}}Items)
+
+	// Iterate over all objects in plan
+	for key, item := range data.Items {
+		// Check if object is present in state
+		if _, ok := state.Items[key]; !ok {
+			// Object is not present in state, hence it's not a candidate for replace
+			continue
+		}
+
+		// Check if any field marked as `requires_replace` has changed
+		{{- range .Attributes}}
+			{{- if eq .TfName "items"}}
+			{{- range .Attributes}}
+			{{- if .RequiresReplace }}
+				{{- if (eq .Type "String")}}
+					if item.{{toGoName .TfName}} != state.Items[key].{{toGoName .TfName}} {
+						toBeReplaced.Items[key] = item
+						continue
+					}
+				{{- else}}
+					{{- errorf "requires_replace is not supported for %v" .Type }}
+				{{- end}}
+			{{- end}}
+			{{- end}}
+			{{- end}}
+		{{- end}}
+	}
+
+	return toBeReplaced
+}
+{{- end}}
+
+// End of section. //template:end findObjectsToBeReplaced
+
+// Section below is generated&owned by "gen/generator.go". //template:begin clearItemIds
+
+{{if and .IsBulk (hasRequiresReplace .Attributes) }}
+func (data *{{camelCase .Name}}) clearItemsIds(ctx context.Context) {
+	for key, value := range data.Items {
+		tmp := value
+		tmp.Id = types.StringNull()
+		data.Items[key] = tmp
+	}
+}
+{{- end}}
+
+// End of section. //template:end clearItemIds
+
+{{- range .Attributes}}
+	{{- if isNestedMap .}}
+		{{- $found := false }}
+		{{- range .Attributes }}
+			{{- if and (eq .ModelName "id") (eq .TfName "id") .ResourceId}}
+				{{- $found = true }}
+			{{- end}}
+		{{- end}}
+		{{- if not $found }}
+			{{- errorf "type Map with attributes has a limitation for now: it must always contain attribute with `model_name: id` and `tf_name: id` and `resource_id: true`, because it must always be used to track subresources."}}
+		{{- end}}
+	{{- end}}
+	{{- range .Attributes}}
+		{{- if isNestedMap .}}
+			{{- errorf "Map not yet implemented at this depth"}}
+		{{- end}}
+		{{- if .OrderedList }}
+			{{- errorf "ordered_list not yet implemented at this depth"}}
+		{{- end}}
+		{{- if hasResourceId .Attributes}}
+			{{- errorf "resource_id not yet implemented at this depth"}}
+		{{- end}}
+
+		{{- range .Attributes}}
+			{{- if isNestedMap .}}
+				{{- errorf "Map not yet implemented at this depth"}}
+			{{- end}}
+			{{- if .OrderedList }}
+				{{- errorf "ordered_list not yet implemented at this depth"}}
+			{{- end}}
+			{{- if hasResourceId .Attributes}}
+				{{- errorf "resource_id not yet implemented at this depth"}}
+			{{- end}}
+			{{- if and $.IsBulk .RequiresReplace}}
+				{{- errorf "requires_replace is not supported for nested objects in bulk operations" }}
+			{{- end}}
+
+			{{- range .Attributes}}
+				{{- if isNestedMap .}}
+					{{- errorf "Map not yet implemented at this depth"}}
+				{{- end}}
+				{{- if .OrderedList }}
+					{{- errorf "ordered_list not yet implemented at this depth"}}
+				{{- end}}
+				{{- if hasResourceId .Attributes}}
+					{{- errorf "resource_id not yet implemented at this depth"}}
+				{{- end}}
+				{{- range .Attributes}}
+					{{- errorf "attributes not yet implemented at this depth"}}
+				{{- end}}
+				{{- if and $.IsBulk .RequiresReplace}}
+					{{- errorf "requires_replace is not supported for nested objects in bulk operations" }}
+				{{- end}}
+			{{- end}}
+		{{- end}}
+	{{- end}}
+{{- end}}

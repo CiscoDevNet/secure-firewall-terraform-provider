@@ -240,3 +240,44 @@ func (data SecurityZones) toBodyNonBulk(ctx context.Context, state SecurityZones
 }
 
 // End of section. //template:end toBodyNonBulk
+
+// Section below is generated&owned by "gen/generator.go". //template:begin findObjectsToBeReplaced
+
+// Check if single object within bulk requires replace due to `requires_replace`
+// Since here we assume object has changed, it must be present in both state and plan (data)
+func (data SecurityZones) findObjectsToBeReplaced(ctx context.Context, state SecurityZones) SecurityZones {
+	// Prepare empty object to be filled in with objects that require replace
+	var toBeReplaced SecurityZones
+	toBeReplaced.Items = make(map[string]SecurityZonesItems)
+
+	// Iterate over all objects in plan
+	for key, item := range data.Items {
+		// Check if object is present in state
+		if _, ok := state.Items[key]; !ok {
+			// Object is not present in state, hence it's not a candidate for replace
+			continue
+		}
+
+		// Check if any field marked as `requires_replace` has changed
+		if item.InterfaceType != state.Items[key].InterfaceType {
+			toBeReplaced.Items[key] = item
+			continue
+		}
+	}
+
+	return toBeReplaced
+}
+
+// End of section. //template:end findObjectsToBeReplaced
+
+// Section below is generated&owned by "gen/generator.go". //template:begin clearItemIds
+
+func (data *SecurityZones) clearItemsIds(ctx context.Context) {
+	for key, value := range data.Items {
+		tmp := value
+		tmp.Id = types.StringNull()
+		data.Items[key] = tmp
+	}
+}
+
+// End of section. //template:end clearItemIds

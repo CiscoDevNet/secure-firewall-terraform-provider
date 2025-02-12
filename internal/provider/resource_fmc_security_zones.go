@@ -26,6 +26,7 @@ import (
 	"strings"
 
 	"github.com/CiscoDevNet/terraform-provider-fmc/internal/provider/helpers"
+	"github.com/CiscoDevNet/terraform-provider-fmc/internal/provider/planmodifiers"
 	"github.com/google/uuid"
 	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
@@ -95,7 +96,7 @@ func (r *SecurityZonesResource) Schema(ctx context.Context, req resource.SchemaR
 							MarkdownDescription: helpers.NewAttributeDescription("Id of the managed Security Zone.").String,
 							Computed:            true,
 							PlanModifiers: []planmodifier.String{
-								stringplanmodifier.UseStateForUnknown(),
+								planmodifiers.ConditionalUseStateForUnknownString("interface_type"),
 							},
 						},
 						"interface_type": schema.StringAttribute{
@@ -243,11 +244,12 @@ func (r *SecurityZonesResource) Update(ctx context.Context, req resource.UpdateR
 	}
 
 	tflog.Debug(ctx, fmt.Sprintf("%s: Beginning Update", plan.Id.ValueString()))
+	// Get objects that need to be replaced due to `requires_replace` flag
+	toBeReplaced := plan.findObjectsToBeReplaced(ctx, state)
 
 	// DELETE
 	// Delete objects (that are present in state, but missing in plan)
-	var toDelete SecurityZones
-	toDelete.Items = make(map[string]SecurityZonesItems)
+	toDelete := toBeReplaced.Clone()
 	planOwnedIDs := make(map[string]string, len(plan.Items))
 
 	// Prepare list of ID that are in plan
@@ -276,8 +278,8 @@ func (r *SecurityZonesResource) Update(ctx context.Context, req resource.UpdateR
 
 	// CREATE
 	// Create new objects (objects that have missing IDs in plan)
-	var toCreate SecurityZones
-	toCreate.Items = make(map[string]SecurityZonesItems)
+	toCreate := toBeReplaced.Clone()
+	toCreate.clearItemsIds(ctx)
 	// Scan plan for items with no ID
 	for k, v := range plan.Items {
 		if v.Id.IsUnknown() || v.Id.IsNull() {
@@ -303,7 +305,12 @@ func (r *SecurityZonesResource) Update(ctx context.Context, req resource.UpdateR
 	var toUpdate SecurityZones
 	toUpdate.Items = make(map[string]SecurityZonesItems)
 
-	for _, valueState := range state.Items {
+	for tmp, valueState := range state.Items {
+		// Check if the ID from state is on toBeReplaced list
+		if _, ok := toBeReplaced.Items[tmp]; ok {
+			// If it is, skip it as it was handled by delete/create processes
+			continue
+		}
 
 		// Check if the ID from plan exists on list of ID owned by state
 		if keyState, ok := planOwnedIDs[valueState.Id.ValueString()]; ok {

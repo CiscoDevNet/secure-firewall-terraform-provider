@@ -28,6 +28,7 @@ attributes:
           to mode NONE of associated interfaces.
         enum_values: [PASSIVE, INLINE, SWITCHED, ROUTED, ASA]
         example: ROUTED
+        requires_replace: true
       - model_name: type
         type: String
         description: Type of the object; this value is always 'SecurityZone'.

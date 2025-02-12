@@ -285,6 +285,21 @@ func HasResourceId(attributes []YamlConfigAttribute) bool {
 	return false
 }
 
+// Templating helper function to return true if any of the attributes has `requires_replace: true`
+func HasRequiresReplace(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if attr.RequiresReplace {
+			return true
+		}
+		if len(attr.Attributes) > 0 {
+			if HasRequiresReplace(attr.Attributes) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 // Templating helper function to return true if type is a list or set without nested elements
 func IsListSet(attribute YamlConfigAttribute) bool {
 	if (attribute.Type == "List" || attribute.Type == "Set") && attribute.ElementType != "" {
@@ -403,6 +418,7 @@ var functions = template.FuncMap{
 	"hasId":                       HasId,
 	"hasReference":                HasReference,
 	"hasResourceId":               HasResourceId,
+	"hasRequiresReplace":          HasRequiresReplace,
 	"isListSet":                   IsListSet,
 	"isList":                      IsList,
 	"isSet":                       IsSet,
