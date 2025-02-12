@@ -746,6 +746,9 @@ func (r *{{camelCase .Name}}Resource) Update(ctx context.Context, req resource.U
 		return
 	}
 
+	{{/* 
+	This part of the code was not used to generate any code. Also, this seems to be using harcoded to id, regardless of the actual resource_id is.
+	
 	{{- if hasResourceId .Attributes}}
 	res, err = r.client.Get(plan.getPath() + "/" + url.QueryEscape(plan.Id.ValueString()), reqMods...)
 	if err != nil {
@@ -754,6 +757,11 @@ func (r *{{camelCase .Name}}Resource) Update(ctx context.Context, req resource.U
 	}
 	plan.fromBodyUnknowns(ctx, res)
 	{{- end}}
+	*/}}
+	{{- if hasComputedRefreshValue .Attributes}}
+	plan.fromBodyUnknowns(ctx, res)
+	{{- end}}
+
 	{{- end}}
 
 	{{- if .IsBulk}}

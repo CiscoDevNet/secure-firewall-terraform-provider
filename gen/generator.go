@@ -150,8 +150,8 @@ type YamlConfigAttribute struct {
 	StringPatterns       []string              `yaml:"string_patterns"`
 	StringMinLength      int64                 `yaml:"string_min_length"`
 	StringMaxLength      int64                 `yaml:"string_max_length"`
-	Computed             string                `yaml:"computed"`
-	ComputedRefreshValue string                `yaml:"computed_refresh_value"`
+	Computed             bool                  `yaml:"computed"`
+	ComputedRefreshValue bool                  `yaml:"computed_refresh_value"`
 	DefaultValue         string                `yaml:"default_value"`
 	Value                string                `yaml:"value"`
 	TestValue            string                `yaml:"test_value"`
@@ -248,6 +248,21 @@ func GetAttributeByTfName(attributes []YamlConfigAttribute, tfName string) YamlC
 		}
 	}
 	return YamlConfigAttribute{}
+}
+
+// Templating helper function to return true if any attribute is set as compute_refresh_value
+func HasComputedRefreshValue(attributes []YamlConfigAttribute) bool {
+	for _, attr := range attributes {
+		if attr.ComputedRefreshValue {
+			return true
+		}
+		if len(attr.Attributes) > 0 {
+			if HasComputedRefreshValue(attr.Attributes) {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 // Templating helper function to return true if id included in attributes
@@ -401,6 +416,7 @@ var functions = template.FuncMap{
 	"getDataSourceQueryAttribute": GetDataSourceQueryAttribute,
 	"getAttributeByTfName":        GetAttributeByTfName,
 	"hasId":                       HasId,
+	"hasComputedRefreshValue":     HasComputedRefreshValue,
 	"hasReference":                HasReference,
 	"hasResourceId":               HasResourceId,
 	"isListSet":                   IsListSet,
@@ -463,6 +479,10 @@ func (attr *YamlConfigAttribute) init(parentGoTypeName string) error {
 	if attr.Type == "Map" && HasId(attr.Attributes) {
 		return fmt.Errorf("Map %q cannot contain sub-attributes with `id: true`, as it treats map key ([k]) as the only unique id",
 			attr.TfName)
+	}
+
+	if attr.ComputedRefreshValue && !attr.Computed {
+		return fmt.Errorf("%q: `computed_refresh_value: true` can only be used with `computed: true`", attr.TfName)
 	}
 
 	// Recurse

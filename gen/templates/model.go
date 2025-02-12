@@ -586,6 +586,10 @@ func (data *{{camelCase .Name}}) fromBodyUnknowns(ctx context.Context, res gjson
 	{{- end}}
 {{- end}}
 
+{{- if and .IsBulk (hasComputedRefreshValue .Attributes)}}
+	{{- errorf "Bulk resources with `computed_refresh_value` support are not yet implemented."}}
+{{- end}}
+
 // Section below is generated&owned by "gen/generator.go". //template:begin Clone
 
 {{if .IsBulk}}
