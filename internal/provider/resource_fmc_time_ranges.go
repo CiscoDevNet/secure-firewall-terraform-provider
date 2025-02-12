@@ -51,7 +51,6 @@ var (
 	_ resource.Resource                = &TimeRangesResource{}
 	_ resource.ResourceWithImportState = &TimeRangesResource{}
 )
-var minFMCVersionBulkDeleteTimeRanges = version.Must(version.NewVersion("999"))
 
 func NewTimeRangesResource() resource.Resource {
 	return &TimeRangesResource{}

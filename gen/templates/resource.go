@@ -56,22 +56,6 @@ var (
 	{{- end}}
 )
 
-{{- if .MinimumVersion}}
-var minFMCVersion{{camelCase .Name}} = version.Must(version.NewVersion("{{.MinimumVersion}}"))
-{{- end}}
-{{- if .MinimumVersionCreate}}
-var minFMCVersionCreate{{camelCase .Name}} = version.Must(version.NewVersion("{{.MinimumVersionCreate}}"))
-{{- end}}
-{{- if .MinimumVersionBulkCreate}}
-var minFMCVersionBulkCreate{{camelCase .Name}} = version.Must(version.NewVersion("{{.MinimumVersionBulkCreate}}"))
-{{- end}}
-{{- if .MinimumVersionBulkDelete}}
-var minFMCVersionBulkDelete{{camelCase .Name}} = version.Must(version.NewVersion("{{.MinimumVersionBulkDelete}}"))
-{{- end}}
-{{- if .BulkSizeCreate}}
-const bulkSizeCreate{{camelCase .Name}} int = {{.BulkSizeCreate}}
-{{- end}}
-
 func New{{camelCase .Name}}Resource() resource.Resource {
 	return &{{camelCase .Name}}Resource{}
 }

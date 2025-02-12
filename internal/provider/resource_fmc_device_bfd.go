@@ -48,7 +48,6 @@ var (
 	_ resource.Resource                = &DeviceBFDResource{}
 	_ resource.ResourceWithImportState = &DeviceBFDResource{}
 )
-var minFMCVersionDeviceBFD = version.Must(version.NewVersion("7.4"))
 
 func NewDeviceBFDResource() resource.Resource {
 	return &DeviceBFDResource{}

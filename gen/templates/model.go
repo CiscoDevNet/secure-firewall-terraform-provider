@@ -128,6 +128,26 @@ type {{.GoTypeName}} struct {
 
 // End of section. //template:end types
 
+// Section below is generated&owned by "gen/generator.go". //template:begin minimumVersions
+
+{{- if .MinimumVersion}}
+var minFMCVersion{{camelCase .Name}} = version.Must(version.NewVersion("{{.MinimumVersion}}"))
+{{- end}}
+{{- if .MinimumVersionCreate}}
+var minFMCVersionCreate{{camelCase .Name}} = version.Must(version.NewVersion("{{.MinimumVersionCreate}}"))
+{{- end}}
+{{- if .MinimumVersionBulkCreate}}
+var minFMCVersionBulkCreate{{camelCase .Name}} = version.Must(version.NewVersion("{{.MinimumVersionBulkCreate}}"))
+{{- end}}
+{{- if .MinimumVersionBulkDelete}}
+var minFMCVersionBulkDelete{{camelCase .Name}} = version.Must(version.NewVersion("{{.MinimumVersionBulkDelete}}"))
+{{- end}}
+{{- if .BulkSizeCreate}}
+const bulkSizeCreate{{camelCase .Name}} int = {{.BulkSizeCreate}}
+{{- end}}
+
+// End of section. //template:end minimumVersions
+
 // Section below is generated&owned by "gen/generator.go". //template:begin getPath
 
 func (data {{camelCase .Name}}) getPath() string {

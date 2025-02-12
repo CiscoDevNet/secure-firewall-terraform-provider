@@ -50,9 +50,6 @@ var (
 	_ resource.Resource                = &SGTsResource{}
 	_ resource.ResourceWithImportState = &SGTsResource{}
 )
-var minFMCVersionCreateSGTs = version.Must(version.NewVersion("7.4"))
-var minFMCVersionBulkCreateSGTs = version.Must(version.NewVersion("999"))
-var minFMCVersionBulkDeleteSGTs = version.Must(version.NewVersion("999"))
 
 func NewSGTsResource() resource.Resource {
 	return &SGTsResource{}

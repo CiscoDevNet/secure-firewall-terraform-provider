@@ -48,7 +48,6 @@ var (
 	_ resource.Resource                = &TunnelZonesResource{}
 	_ resource.ResourceWithImportState = &TunnelZonesResource{}
 )
-var minFMCVersionBulkDeleteTunnelZones = version.Must(version.NewVersion("7.4"))
 
 func NewTunnelZonesResource() resource.Resource {
 	return &TunnelZonesResource{}

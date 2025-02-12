@@ -47,6 +47,10 @@ type InterfaceGroupInterfaces struct {
 
 // End of section. //template:end types
 
+// Section below is generated&owned by "gen/generator.go". //template:begin minimumVersions
+
+// End of section. //template:end minimumVersions
+
 // Section below is generated&owned by "gen/generator.go". //template:begin getPath
 
 func (data InterfaceGroup) getPath() string {

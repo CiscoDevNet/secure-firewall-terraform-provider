@@ -54,7 +54,6 @@ var (
 	_ resource.Resource                = &FilePolicyResource{}
 	_ resource.ResourceWithImportState = &FilePolicyResource{}
 )
-var minFMCVersionCreateFilePolicy = version.Must(version.NewVersion("7.4"))
 
 func NewFilePolicyResource() resource.Resource {
 	return &FilePolicyResource{}

@@ -50,9 +50,6 @@ var (
 	_ resource.Resource                = &SecurityZonesResource{}
 	_ resource.ResourceWithImportState = &SecurityZonesResource{}
 )
-var minFMCVersionBulkDeleteSecurityZones = version.Must(version.NewVersion("999"))
-
-const bulkSizeCreateSecurityZones int = 20
 
 func NewSecurityZonesResource() resource.Resource {
 	return &SecurityZonesResource{}

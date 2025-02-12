@@ -50,7 +50,6 @@ var (
 	_ resource.Resource                = &ICMPv4ObjectsResource{}
 	_ resource.ResourceWithImportState = &ICMPv4ObjectsResource{}
 )
-var minFMCVersionBulkDeleteICMPv4Objects = version.Must(version.NewVersion("7.4"))
 
 func NewICMPv4ObjectsResource() resource.Resource {
 	return &ICMPv4ObjectsResource{}

@@ -4,11 +4,16 @@ page_title: "fmc_file_type Data Source - terraform-provider-fmc"
 subcategory: "Objects"
 description: |-
   This data source reads the File Type.
+  The following restrictions apply:
+  Minimum FMC version: 7.4
 ---
 
 # fmc_file_type (Data Source)
 
 This data source reads the File Type.
+
+The following restrictions apply:
+  - Minimum FMC version: `7.4`
 
 ## Example Usage
 

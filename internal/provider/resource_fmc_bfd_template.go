@@ -48,7 +48,6 @@ var (
 	_ resource.Resource                = &BFDTemplateResource{}
 	_ resource.ResourceWithImportState = &BFDTemplateResource{}
 )
-var minFMCVersionBFDTemplate = version.Must(version.NewVersion("7.4"))
 
 func NewBFDTemplateResource() resource.Resource {
 	return &BFDTemplateResource{}

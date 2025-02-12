@@ -48,7 +48,6 @@ var (
 	_ resource.Resource                = &StandardACLResource{}
 	_ resource.ResourceWithImportState = &StandardACLResource{}
 )
-var minFMCVersionCreateStandardACL = version.Must(version.NewVersion("7.2"))
 
 func NewStandardACLResource() resource.Resource {
 	return &StandardACLResource{}

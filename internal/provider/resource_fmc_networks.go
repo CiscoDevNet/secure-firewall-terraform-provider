@@ -48,7 +48,6 @@ var (
 	_ resource.Resource                = &NetworksResource{}
 	_ resource.ResourceWithImportState = &NetworksResource{}
 )
-var minFMCVersionBulkDeleteNetworks = version.Must(version.NewVersion("7.4"))
 
 func NewNetworksResource() resource.Resource {
 	return &NetworksResource{}

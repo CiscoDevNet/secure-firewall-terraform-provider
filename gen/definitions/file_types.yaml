@@ -5,6 +5,7 @@ no_resource: true
 no_import: true
 is_bulk: true
 doc_category: Objects
+minimum_version: "7.4"
 attributes:
   - model_name: items
     type: Map

@@ -45,7 +45,6 @@ var (
 	_ resource.Resource                = &SGTResource{}
 	_ resource.ResourceWithImportState = &SGTResource{}
 )
-var minFMCVersionCreateSGT = version.Must(version.NewVersion("7.4"))
 
 func NewSGTResource() resource.Resource {
 	return &SGTResource{}

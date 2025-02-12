@@ -51,7 +51,6 @@ var (
 	_ resource.Resource                = &FQDNObjectsResource{}
 	_ resource.ResourceWithImportState = &FQDNObjectsResource{}
 )
-var minFMCVersionBulkDeleteFQDNObjects = version.Must(version.NewVersion("7.4"))
 
 func NewFQDNObjectsResource() resource.Resource {
 	return &FQDNObjectsResource{}

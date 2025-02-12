@@ -21,8 +21,10 @@ package provider
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/CiscoDevNet/terraform-provider-fmc/internal/provider/helpers"
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
@@ -54,7 +56,7 @@ func (d *FileTypesDataSource) Metadata(_ context.Context, req datasource.Metadat
 func (d *FileTypesDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: helpers.NewAttributeDescription("This data source reads the File Types.").String,
+		MarkdownDescription: helpers.NewAttributeDescription("This data source reads the File Types.").AddMinimumVersionHeaderDescription().AddMinimumVersionDescription("7.4").String,
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -99,6 +101,14 @@ func (d *FileTypesDataSource) Configure(_ context.Context, req datasource.Config
 // Section below is generated&owned by "gen/generator.go". //template:begin read
 
 func (d *FileTypesDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+	// Get FMC version
+	fmcVersion, _ := version.NewVersion(strings.Split(d.client.FMCVersion, " ")[0])
+
+	// Check if FMC client is connected to supports this object
+	if fmcVersion.LessThan(minFMCVersionFileTypes) {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("UnsupportedVersion: FMC version %s does not support File Types, minimum required version is 7.4", d.client.FMCVersion))
+		return
+	}
 	var config FileTypes
 
 	// Read config

@@ -50,7 +50,6 @@ var (
 	_ resource.Resource                = &PortGroupsResource{}
 	_ resource.ResourceWithImportState = &PortGroupsResource{}
 )
-var minFMCVersionBulkDeletePortGroups = version.Must(version.NewVersion("7.4"))
 
 func NewPortGroupsResource() resource.Resource {
 	return &PortGroupsResource{}

@@ -48,7 +48,6 @@ var (
 	_ resource.Resource                = &URLGroupsResource{}
 	_ resource.ResourceWithImportState = &URLGroupsResource{}
 )
-var minFMCVersionBulkDeleteURLGroups = version.Must(version.NewVersion("7.4"))
 
 func NewURLGroupsResource() resource.Resource {
 	return &URLGroupsResource{}

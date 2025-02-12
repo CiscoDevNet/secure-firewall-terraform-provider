@@ -48,7 +48,6 @@ var (
 	_ resource.Resource                = &RangesResource{}
 	_ resource.ResourceWithImportState = &RangesResource{}
 )
-var minFMCVersionBulkDeleteRanges = version.Must(version.NewVersion("7.4"))
 
 func NewRangesResource() resource.Resource {
 	return &RangesResource{}

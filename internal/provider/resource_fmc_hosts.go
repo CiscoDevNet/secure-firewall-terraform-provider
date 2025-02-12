@@ -48,7 +48,6 @@ var (
 	_ resource.Resource                = &HostsResource{}
 	_ resource.ResourceWithImportState = &HostsResource{}
 )
-var minFMCVersionBulkDeleteHosts = version.Must(version.NewVersion("7.4"))
 
 func NewHostsResource() resource.Resource {
 	return &HostsResource{}

@@ -4,6 +4,7 @@ rest_endpoint: /api/fmc_config/v1/domain/{DOMAIN_UUID}/object/filecategories
 no_resource: true
 no_import: true
 is_bulk: true
+minimum_version: "7.4"
 doc_category: Objects
 attributes:
   - model_name: items

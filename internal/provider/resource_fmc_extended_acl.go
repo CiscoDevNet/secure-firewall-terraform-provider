@@ -50,7 +50,6 @@ var (
 	_ resource.Resource                = &ExtendedACLResource{}
 	_ resource.ResourceWithImportState = &ExtendedACLResource{}
 )
-var minFMCVersionCreateExtendedACL = version.Must(version.NewVersion("7.2"))
 
 func NewExtendedACLResource() resource.Resource {
 	return &ExtendedACLResource{}

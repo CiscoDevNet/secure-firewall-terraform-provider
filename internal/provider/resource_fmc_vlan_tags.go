@@ -48,7 +48,6 @@ var (
 	_ resource.Resource                = &VLANTagsResource{}
 	_ resource.ResourceWithImportState = &VLANTagsResource{}
 )
-var minFMCVersionBulkDeleteVLANTags = version.Must(version.NewVersion("7.4"))
 
 func NewVLANTagsResource() resource.Resource {
 	return &VLANTagsResource{}
