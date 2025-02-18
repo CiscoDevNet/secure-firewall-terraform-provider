@@ -1,0 +1,18 @@
+---
+name: Application Category
+rest_endpoint: /api/fmc_config/v1/domain/{DOMAIN_UUID}/object/applicationcategories
+no_resource: true
+no_import: true
+doc_category: Objects
+attributes:
+  - model_name: name
+    type: String
+    description: >-
+      Name of the Application Category.
+    mandatory: true
+    example: software update
+    data_source_query: true
+  - model_name: type
+    type: String
+    description: Type of the object; this value is always 'ApplicationCategory'.
+    computed: true

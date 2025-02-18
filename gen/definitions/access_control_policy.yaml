@@ -261,11 +261,13 @@ attributes:
             id: true
             example: 76d24097-41c4-4558-a4d0-a8c07ac08470
             test_value: fmc_network.test.id
+            mandatory: true
           - model_name: type
             type: String
             description: Type of the object.
             example: Network
             test_value: fmc_network.test.type
+            mandatory: true
       - model_name: objects
         data_path: [destinationNetworks]
         tf_name: destination_network_objects
@@ -278,11 +280,13 @@ attributes:
             id: true
             example: 76d24097-41c4-4558-a4d0-a8c07ac08470
             test_value: fmc_host.test.id
+            mandatory: true
           - model_name: type
             type: String
             description: Type of the object.
             example: Network
             test_value: fmc_host.test.type
+            mandatory: true
       - model_name: objects
         data_path: [sourceDynamicObjects]
         tf_name: source_dynamic_objects
@@ -425,11 +429,13 @@ attributes:
             description: Id of the object.
             id: true
             example: 76d24097-41c4-4558-a4d0-a8c07ac08470
+            mandatory: true
             # test_value: fmc_sgt.test.id
           - model_name: type
             type: String
             description: Type of the object.
             example: SecurityGroupTag
+            mandatory: true
             # test_value: fmc_security_group_tag.test.type
       - model_name: objects
         data_path: [sourceZones]
@@ -636,6 +642,90 @@ attributes:
           Id of the Variable Set for the rule action.
         example: 76d24097-41c4-4558-a4d0-a8c07ac08470
         exclude_test: true
+      - model_name: applications
+        data_path: [applications]
+        type: Set
+        description: Set of applications.
+        exclude_test: true
+        attributes:
+          - model_name: id
+            type: String
+            description: Id of the Application.
+            id: true
+            example: "7967"
+            mandatory: true
+      - model_name: applicationFilters
+        data_path: [applications]
+        tf_name: application_filter_objects
+        type: Set
+        description: Set of Application Filtering objects.
+        exclude_test: true
+        attributes:
+          - model_name: id
+            type: String
+            description: Id of the Application Filter.
+            id: true
+            example: "bb18bf88-eddc-11ef-83d2-b4300fadd560"
+            mandatory: true
+      - model_name: inlineApplicationFilters
+        data_path: [applications]
+        tf_name: application_filters
+        type: List
+        description: List of Application Filtering conditions.
+        ordered_list: true
+        attributes:
+        - model_name: applicationTypes
+          tf_name: types
+          type: Set
+          description: Set of Application Types.
+          attributes:
+            - model_name: id
+              type: String
+              description: Id of the Application Type.
+              example: "WEBAPP"
+              id: true
+              mandatory: true
+        - model_name: risks
+          type: Set
+          description: Set of Application Risk levels.
+          attributes:
+            - model_name: id
+              type: String
+              description: Id of the Application Risk level.
+              example: "VERY_LOW"
+              id: true
+              mandatory: true
+        - model_name: productivities
+          tf_name: business_relevances
+          type: Set
+          description: Set of Application Business Relevance levels.
+          attributes:
+            - model_name: id
+              type: String
+              description: Id of the Application Business Relevance level.
+              example: "LOW"
+              id: true
+              mandatory: true
+        - model_name: categories
+          type: Set
+          description: Set of Application Categories.
+          attributes:
+            - model_name: id
+              type: String
+              description: Id of the Application Category.
+              example: "118"
+              id: true
+              mandatory: true
+        - model_name: tags
+          type: Set
+          description: Set of Application Tags.
+          attributes:
+            - model_name: id
+              type: String
+              description: Id of the Application Tag.
+              example: "24"
+              id: true
+              mandatory: true
 
 test_prerequisites: |-
   resource "fmc_network" "test" {

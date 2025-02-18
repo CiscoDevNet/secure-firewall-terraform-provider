@@ -550,9 +550,6 @@ func (data *{{camelCase .Name}}) fromBodyUnknowns(ctx context.Context, res gjson
 		{{- if isNestedMap .}}
 			{{- errorf "Map not yet implemented at this depth"}}
 		{{- end}}
-		{{- if .OrderedList }}
-			{{- errorf "ordered_list not yet implemented at this depth"}}
-		{{- end}}
 		{{- if hasResourceId .Attributes}}
 			{{- errorf "resource_id not yet implemented at this depth"}}
 		{{- end}}

@@ -53,6 +53,11 @@ func TestAccDataSourceFmcAccessControlPolicy(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_access_control_policy.test", "rules.0.log_begin", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_access_control_policy.test", "rules.0.log_end", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_access_control_policy.test", "rules.0.send_events_to_fmc", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_access_control_policy.test", "rules.0.application_filters.0.types.0.id", "WEBAPP"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_access_control_policy.test", "rules.0.application_filters.0.risks.0.id", "VERY_LOW"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_access_control_policy.test", "rules.0.application_filters.0.business_relevances.0.id", "LOW"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_access_control_policy.test", "rules.0.application_filters.0.categories.0.id", "118"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.fmc_access_control_policy.test", "rules.0.application_filters.0.tags.0.id", "24"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -155,6 +160,23 @@ func testAccDataSourceFmcAccessControlPolicyConfig() string {
 	config += `		log_files = false` + "\n"
 	config += `		send_events_to_fmc = true` + "\n"
 	config += `		description = ""` + "\n"
+	config += `		application_filters = [{` + "\n"
+	config += `			types = [{` + "\n"
+	config += `				id = "WEBAPP"` + "\n"
+	config += `			}]` + "\n"
+	config += `			risks = [{` + "\n"
+	config += `				id = "VERY_LOW"` + "\n"
+	config += `			}]` + "\n"
+	config += `			business_relevances = [{` + "\n"
+	config += `				id = "LOW"` + "\n"
+	config += `			}]` + "\n"
+	config += `			categories = [{` + "\n"
+	config += `				id = "118"` + "\n"
+	config += `			}]` + "\n"
+	config += `			tags = [{` + "\n"
+	config += `				id = "24"` + "\n"
+	config += `			}]` + "\n"
+	config += `		}]` + "\n"
 	config += `	}]` + "\n"
 	config += `}` + "\n"
 
@@ -219,6 +241,23 @@ func testAccNamedDataSourceFmcAccessControlPolicyConfig() string {
 	config += `		log_files = false` + "\n"
 	config += `		send_events_to_fmc = true` + "\n"
 	config += `		description = ""` + "\n"
+	config += `		application_filters = [{` + "\n"
+	config += `			types = [{` + "\n"
+	config += `				id = "WEBAPP"` + "\n"
+	config += `			}]` + "\n"
+	config += `			risks = [{` + "\n"
+	config += `				id = "VERY_LOW"` + "\n"
+	config += `			}]` + "\n"
+	config += `			business_relevances = [{` + "\n"
+	config += `				id = "LOW"` + "\n"
+	config += `			}]` + "\n"
+	config += `			categories = [{` + "\n"
+	config += `				id = "118"` + "\n"
+	config += `			}]` + "\n"
+	config += `			tags = [{` + "\n"
+	config += `				id = "24"` + "\n"
+	config += `			}]` + "\n"
+	config += `		}]` + "\n"
 	config += `	}]` + "\n"
 	config += `}` + "\n"
 

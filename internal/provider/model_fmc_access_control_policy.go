@@ -102,6 +102,9 @@ type AccessControlPolicyRules struct {
 	IntrusionPolicyId          types.String                                         `tfsdk:"intrusion_policy_id"`
 	TimeRangeId                types.String                                         `tfsdk:"time_range_id"`
 	VariableSetId              types.String                                         `tfsdk:"variable_set_id"`
+	Applications               []AccessControlPolicyRulesApplications               `tfsdk:"applications"`
+	ApplicationFilterObjects   []AccessControlPolicyRulesApplicationFilterObjects   `tfsdk:"application_filter_objects"`
+	ApplicationFilters         []AccessControlPolicyRulesApplicationFilters         `tfsdk:"application_filters"`
 }
 
 type AccessControlPolicyRulesSourceNetworkLiterals struct {
@@ -170,6 +173,35 @@ type AccessControlPolicyRulesUrlObjects struct {
 type AccessControlPolicyRulesUrlCategories struct {
 	Id         types.String `tfsdk:"id"`
 	Reputation types.String `tfsdk:"reputation"`
+}
+type AccessControlPolicyRulesApplications struct {
+	Id types.String `tfsdk:"id"`
+}
+type AccessControlPolicyRulesApplicationFilterObjects struct {
+	Id types.String `tfsdk:"id"`
+}
+type AccessControlPolicyRulesApplicationFilters struct {
+	Types              []AccessControlPolicyRulesApplicationFiltersTypes              `tfsdk:"types"`
+	Risks              []AccessControlPolicyRulesApplicationFiltersRisks              `tfsdk:"risks"`
+	BusinessRelevances []AccessControlPolicyRulesApplicationFiltersBusinessRelevances `tfsdk:"business_relevances"`
+	Categories         []AccessControlPolicyRulesApplicationFiltersCategories         `tfsdk:"categories"`
+	Tags               []AccessControlPolicyRulesApplicationFiltersTags               `tfsdk:"tags"`
+}
+
+type AccessControlPolicyRulesApplicationFiltersTypes struct {
+	Id types.String `tfsdk:"id"`
+}
+type AccessControlPolicyRulesApplicationFiltersRisks struct {
+	Id types.String `tfsdk:"id"`
+}
+type AccessControlPolicyRulesApplicationFiltersBusinessRelevances struct {
+	Id types.String `tfsdk:"id"`
+}
+type AccessControlPolicyRulesApplicationFiltersCategories struct {
+	Id types.String `tfsdk:"id"`
+}
+type AccessControlPolicyRulesApplicationFiltersTags struct {
+	Id types.String `tfsdk:"id"`
 }
 
 // End of section. //template:end types
@@ -562,6 +594,83 @@ func (data AccessControlPolicy) toBody(ctx context.Context, state AccessControlP
 			}
 			if !item.VariableSetId.IsNull() {
 				itemBody, _ = sjson.Set(itemBody, "variableSet.id", item.VariableSetId.ValueString())
+			}
+			if len(item.Applications) > 0 {
+				itemBody, _ = sjson.Set(itemBody, "applications.applications", []interface{}{})
+				for _, childItem := range item.Applications {
+					itemChildBody := ""
+					if !childItem.Id.IsNull() {
+						itemChildBody, _ = sjson.Set(itemChildBody, "id", childItem.Id.ValueString())
+					}
+					itemBody, _ = sjson.SetRaw(itemBody, "applications.applications.-1", itemChildBody)
+				}
+			}
+			if len(item.ApplicationFilterObjects) > 0 {
+				itemBody, _ = sjson.Set(itemBody, "applications.applicationFilters", []interface{}{})
+				for _, childItem := range item.ApplicationFilterObjects {
+					itemChildBody := ""
+					if !childItem.Id.IsNull() {
+						itemChildBody, _ = sjson.Set(itemChildBody, "id", childItem.Id.ValueString())
+					}
+					itemBody, _ = sjson.SetRaw(itemBody, "applications.applicationFilters.-1", itemChildBody)
+				}
+			}
+			if len(item.ApplicationFilters) > 0 {
+				itemBody, _ = sjson.Set(itemBody, "applications.inlineApplicationFilters", []interface{}{})
+				for _, childItem := range item.ApplicationFilters {
+					itemChildBody := ""
+					if len(childItem.Types) > 0 {
+						itemChildBody, _ = sjson.Set(itemChildBody, "applicationTypes", []interface{}{})
+						for _, childChildItem := range childItem.Types {
+							itemChildChildBody := ""
+							if !childChildItem.Id.IsNull() {
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "id", childChildItem.Id.ValueString())
+							}
+							itemChildBody, _ = sjson.SetRaw(itemChildBody, "applicationTypes.-1", itemChildChildBody)
+						}
+					}
+					if len(childItem.Risks) > 0 {
+						itemChildBody, _ = sjson.Set(itemChildBody, "risks", []interface{}{})
+						for _, childChildItem := range childItem.Risks {
+							itemChildChildBody := ""
+							if !childChildItem.Id.IsNull() {
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "id", childChildItem.Id.ValueString())
+							}
+							itemChildBody, _ = sjson.SetRaw(itemChildBody, "risks.-1", itemChildChildBody)
+						}
+					}
+					if len(childItem.BusinessRelevances) > 0 {
+						itemChildBody, _ = sjson.Set(itemChildBody, "productivities", []interface{}{})
+						for _, childChildItem := range childItem.BusinessRelevances {
+							itemChildChildBody := ""
+							if !childChildItem.Id.IsNull() {
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "id", childChildItem.Id.ValueString())
+							}
+							itemChildBody, _ = sjson.SetRaw(itemChildBody, "productivities.-1", itemChildChildBody)
+						}
+					}
+					if len(childItem.Categories) > 0 {
+						itemChildBody, _ = sjson.Set(itemChildBody, "categories", []interface{}{})
+						for _, childChildItem := range childItem.Categories {
+							itemChildChildBody := ""
+							if !childChildItem.Id.IsNull() {
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "id", childChildItem.Id.ValueString())
+							}
+							itemChildBody, _ = sjson.SetRaw(itemChildBody, "categories.-1", itemChildChildBody)
+						}
+					}
+					if len(childItem.Tags) > 0 {
+						itemChildBody, _ = sjson.Set(itemChildBody, "tags", []interface{}{})
+						for _, childChildItem := range childItem.Tags {
+							itemChildChildBody := ""
+							if !childChildItem.Id.IsNull() {
+								itemChildChildBody, _ = sjson.Set(itemChildChildBody, "id", childChildItem.Id.ValueString())
+							}
+							itemChildBody, _ = sjson.SetRaw(itemChildBody, "tags.-1", itemChildChildBody)
+						}
+					}
+					itemBody, _ = sjson.SetRaw(itemBody, "applications.inlineApplicationFilters.-1", itemChildBody)
+				}
 			}
 			body, _ = sjson.SetRaw(body, "dummy_rules.-1", itemBody)
 		}
@@ -1069,6 +1178,113 @@ func (data *AccessControlPolicy) fromBody(ctx context.Context, res gjson.Result)
 				data.VariableSetId = types.StringValue(value.String())
 			} else {
 				data.VariableSetId = types.StringNull()
+			}
+			if value := res.Get("applications.applications"); value.Exists() {
+				data.Applications = make([]AccessControlPolicyRulesApplications, 0)
+				value.ForEach(func(k, res gjson.Result) bool {
+					parent := &data
+					data := AccessControlPolicyRulesApplications{}
+					if value := res.Get("id"); value.Exists() {
+						data.Id = types.StringValue(value.String())
+					} else {
+						data.Id = types.StringNull()
+					}
+					(*parent).Applications = append((*parent).Applications, data)
+					return true
+				})
+			}
+			if value := res.Get("applications.applicationFilters"); value.Exists() {
+				data.ApplicationFilterObjects = make([]AccessControlPolicyRulesApplicationFilterObjects, 0)
+				value.ForEach(func(k, res gjson.Result) bool {
+					parent := &data
+					data := AccessControlPolicyRulesApplicationFilterObjects{}
+					if value := res.Get("id"); value.Exists() {
+						data.Id = types.StringValue(value.String())
+					} else {
+						data.Id = types.StringNull()
+					}
+					(*parent).ApplicationFilterObjects = append((*parent).ApplicationFilterObjects, data)
+					return true
+				})
+			}
+			if value := res.Get("applications.inlineApplicationFilters"); value.Exists() {
+				data.ApplicationFilters = make([]AccessControlPolicyRulesApplicationFilters, 0)
+				value.ForEach(func(k, res gjson.Result) bool {
+					parent := &data
+					data := AccessControlPolicyRulesApplicationFilters{}
+					if value := res.Get("applicationTypes"); value.Exists() {
+						data.Types = make([]AccessControlPolicyRulesApplicationFiltersTypes, 0)
+						value.ForEach(func(k, res gjson.Result) bool {
+							parent := &data
+							data := AccessControlPolicyRulesApplicationFiltersTypes{}
+							if value := res.Get("id"); value.Exists() {
+								data.Id = types.StringValue(value.String())
+							} else {
+								data.Id = types.StringNull()
+							}
+							(*parent).Types = append((*parent).Types, data)
+							return true
+						})
+					}
+					if value := res.Get("risks"); value.Exists() {
+						data.Risks = make([]AccessControlPolicyRulesApplicationFiltersRisks, 0)
+						value.ForEach(func(k, res gjson.Result) bool {
+							parent := &data
+							data := AccessControlPolicyRulesApplicationFiltersRisks{}
+							if value := res.Get("id"); value.Exists() {
+								data.Id = types.StringValue(value.String())
+							} else {
+								data.Id = types.StringNull()
+							}
+							(*parent).Risks = append((*parent).Risks, data)
+							return true
+						})
+					}
+					if value := res.Get("productivities"); value.Exists() {
+						data.BusinessRelevances = make([]AccessControlPolicyRulesApplicationFiltersBusinessRelevances, 0)
+						value.ForEach(func(k, res gjson.Result) bool {
+							parent := &data
+							data := AccessControlPolicyRulesApplicationFiltersBusinessRelevances{}
+							if value := res.Get("id"); value.Exists() {
+								data.Id = types.StringValue(value.String())
+							} else {
+								data.Id = types.StringNull()
+							}
+							(*parent).BusinessRelevances = append((*parent).BusinessRelevances, data)
+							return true
+						})
+					}
+					if value := res.Get("categories"); value.Exists() {
+						data.Categories = make([]AccessControlPolicyRulesApplicationFiltersCategories, 0)
+						value.ForEach(func(k, res gjson.Result) bool {
+							parent := &data
+							data := AccessControlPolicyRulesApplicationFiltersCategories{}
+							if value := res.Get("id"); value.Exists() {
+								data.Id = types.StringValue(value.String())
+							} else {
+								data.Id = types.StringNull()
+							}
+							(*parent).Categories = append((*parent).Categories, data)
+							return true
+						})
+					}
+					if value := res.Get("tags"); value.Exists() {
+						data.Tags = make([]AccessControlPolicyRulesApplicationFiltersTags, 0)
+						value.ForEach(func(k, res gjson.Result) bool {
+							parent := &data
+							data := AccessControlPolicyRulesApplicationFiltersTags{}
+							if value := res.Get("id"); value.Exists() {
+								data.Id = types.StringValue(value.String())
+							} else {
+								data.Id = types.StringNull()
+							}
+							(*parent).Tags = append((*parent).Tags, data)
+							return true
+						})
+					}
+					(*parent).ApplicationFilters = append((*parent).ApplicationFilters, data)
+					return true
+				})
 			}
 			(*parent).Rules = append((*parent).Rules, data)
 			return true
@@ -2120,6 +2336,324 @@ func (data *AccessControlPolicy) fromBodyPartial(ctx context.Context, res gjson.
 			data.VariableSetId = types.StringValue(value.String())
 		} else {
 			data.VariableSetId = types.StringNull()
+		}
+		for i := 0; i < len(data.Applications); i++ {
+			keys := [...]string{"id"}
+			keyValues := [...]string{data.Applications[i].Id.ValueString()}
+
+			parent := &data
+			data := (*parent).Applications[i]
+			parentRes := &res
+			var res gjson.Result
+
+			parentRes.Get("applications.applications").ForEach(
+				func(_, v gjson.Result) bool {
+					found := false
+					for ik := range keys {
+						if v.Get(keys[ik]).String() != keyValues[ik] {
+							found = false
+							break
+						}
+						found = true
+					}
+					if found {
+						res = v
+						return false
+					}
+					return true
+				},
+			)
+			if !res.Exists() {
+				tflog.Debug(ctx, fmt.Sprintf("removing Applications[%d] = %+v",
+					i,
+					(*parent).Applications[i],
+				))
+				(*parent).Applications = slices.Delete((*parent).Applications, i, i+1)
+				i--
+
+				continue
+			}
+			if value := res.Get("id"); value.Exists() && !data.Id.IsNull() {
+				data.Id = types.StringValue(value.String())
+			} else {
+				data.Id = types.StringNull()
+			}
+			(*parent).Applications[i] = data
+		}
+		for i := 0; i < len(data.ApplicationFilterObjects); i++ {
+			keys := [...]string{"id"}
+			keyValues := [...]string{data.ApplicationFilterObjects[i].Id.ValueString()}
+
+			parent := &data
+			data := (*parent).ApplicationFilterObjects[i]
+			parentRes := &res
+			var res gjson.Result
+
+			parentRes.Get("applications.applicationFilters").ForEach(
+				func(_, v gjson.Result) bool {
+					found := false
+					for ik := range keys {
+						if v.Get(keys[ik]).String() != keyValues[ik] {
+							found = false
+							break
+						}
+						found = true
+					}
+					if found {
+						res = v
+						return false
+					}
+					return true
+				},
+			)
+			if !res.Exists() {
+				tflog.Debug(ctx, fmt.Sprintf("removing ApplicationFilterObjects[%d] = %+v",
+					i,
+					(*parent).ApplicationFilterObjects[i],
+				))
+				(*parent).ApplicationFilterObjects = slices.Delete((*parent).ApplicationFilterObjects, i, i+1)
+				i--
+
+				continue
+			}
+			if value := res.Get("id"); value.Exists() && !data.Id.IsNull() {
+				data.Id = types.StringValue(value.String())
+			} else {
+				data.Id = types.StringNull()
+			}
+			(*parent).ApplicationFilterObjects[i] = data
+		}
+		{
+			l := len(res.Get("applications.inlineApplicationFilters").Array())
+			tflog.Debug(ctx, fmt.Sprintf("applications.inlineApplicationFilters array resizing from %d to %d", len(data.ApplicationFilters), l))
+			for i := len(data.ApplicationFilters); i < l; i++ {
+				data.ApplicationFilters = append(data.ApplicationFilters, AccessControlPolicyRulesApplicationFilters{})
+			}
+			if len(data.ApplicationFilters) > l {
+				data.ApplicationFilters = data.ApplicationFilters[:l]
+			}
+		}
+		for i := range data.ApplicationFilters {
+			parent := &data
+			data := (*parent).ApplicationFilters[i]
+			parentRes := &res
+			res := parentRes.Get(fmt.Sprintf("applications.inlineApplicationFilters.%d", i))
+			for i := 0; i < len(data.Types); i++ {
+				keys := [...]string{"id"}
+				keyValues := [...]string{data.Types[i].Id.ValueString()}
+
+				parent := &data
+				data := (*parent).Types[i]
+				parentRes := &res
+				var res gjson.Result
+
+				parentRes.Get("applicationTypes").ForEach(
+					func(_, v gjson.Result) bool {
+						found := false
+						for ik := range keys {
+							if v.Get(keys[ik]).String() != keyValues[ik] {
+								found = false
+								break
+							}
+							found = true
+						}
+						if found {
+							res = v
+							return false
+						}
+						return true
+					},
+				)
+				if !res.Exists() {
+					tflog.Debug(ctx, fmt.Sprintf("removing Types[%d] = %+v",
+						i,
+						(*parent).Types[i],
+					))
+					(*parent).Types = slices.Delete((*parent).Types, i, i+1)
+					i--
+
+					continue
+				}
+				if value := res.Get("id"); value.Exists() && !data.Id.IsNull() {
+					data.Id = types.StringValue(value.String())
+				} else {
+					data.Id = types.StringNull()
+				}
+				(*parent).Types[i] = data
+			}
+			for i := 0; i < len(data.Risks); i++ {
+				keys := [...]string{"id"}
+				keyValues := [...]string{data.Risks[i].Id.ValueString()}
+
+				parent := &data
+				data := (*parent).Risks[i]
+				parentRes := &res
+				var res gjson.Result
+
+				parentRes.Get("risks").ForEach(
+					func(_, v gjson.Result) bool {
+						found := false
+						for ik := range keys {
+							if v.Get(keys[ik]).String() != keyValues[ik] {
+								found = false
+								break
+							}
+							found = true
+						}
+						if found {
+							res = v
+							return false
+						}
+						return true
+					},
+				)
+				if !res.Exists() {
+					tflog.Debug(ctx, fmt.Sprintf("removing Risks[%d] = %+v",
+						i,
+						(*parent).Risks[i],
+					))
+					(*parent).Risks = slices.Delete((*parent).Risks, i, i+1)
+					i--
+
+					continue
+				}
+				if value := res.Get("id"); value.Exists() && !data.Id.IsNull() {
+					data.Id = types.StringValue(value.String())
+				} else {
+					data.Id = types.StringNull()
+				}
+				(*parent).Risks[i] = data
+			}
+			for i := 0; i < len(data.BusinessRelevances); i++ {
+				keys := [...]string{"id"}
+				keyValues := [...]string{data.BusinessRelevances[i].Id.ValueString()}
+
+				parent := &data
+				data := (*parent).BusinessRelevances[i]
+				parentRes := &res
+				var res gjson.Result
+
+				parentRes.Get("productivities").ForEach(
+					func(_, v gjson.Result) bool {
+						found := false
+						for ik := range keys {
+							if v.Get(keys[ik]).String() != keyValues[ik] {
+								found = false
+								break
+							}
+							found = true
+						}
+						if found {
+							res = v
+							return false
+						}
+						return true
+					},
+				)
+				if !res.Exists() {
+					tflog.Debug(ctx, fmt.Sprintf("removing BusinessRelevances[%d] = %+v",
+						i,
+						(*parent).BusinessRelevances[i],
+					))
+					(*parent).BusinessRelevances = slices.Delete((*parent).BusinessRelevances, i, i+1)
+					i--
+
+					continue
+				}
+				if value := res.Get("id"); value.Exists() && !data.Id.IsNull() {
+					data.Id = types.StringValue(value.String())
+				} else {
+					data.Id = types.StringNull()
+				}
+				(*parent).BusinessRelevances[i] = data
+			}
+			for i := 0; i < len(data.Categories); i++ {
+				keys := [...]string{"id"}
+				keyValues := [...]string{data.Categories[i].Id.ValueString()}
+
+				parent := &data
+				data := (*parent).Categories[i]
+				parentRes := &res
+				var res gjson.Result
+
+				parentRes.Get("categories").ForEach(
+					func(_, v gjson.Result) bool {
+						found := false
+						for ik := range keys {
+							if v.Get(keys[ik]).String() != keyValues[ik] {
+								found = false
+								break
+							}
+							found = true
+						}
+						if found {
+							res = v
+							return false
+						}
+						return true
+					},
+				)
+				if !res.Exists() {
+					tflog.Debug(ctx, fmt.Sprintf("removing Categories[%d] = %+v",
+						i,
+						(*parent).Categories[i],
+					))
+					(*parent).Categories = slices.Delete((*parent).Categories, i, i+1)
+					i--
+
+					continue
+				}
+				if value := res.Get("id"); value.Exists() && !data.Id.IsNull() {
+					data.Id = types.StringValue(value.String())
+				} else {
+					data.Id = types.StringNull()
+				}
+				(*parent).Categories[i] = data
+			}
+			for i := 0; i < len(data.Tags); i++ {
+				keys := [...]string{"id"}
+				keyValues := [...]string{data.Tags[i].Id.ValueString()}
+
+				parent := &data
+				data := (*parent).Tags[i]
+				parentRes := &res
+				var res gjson.Result
+
+				parentRes.Get("tags").ForEach(
+					func(_, v gjson.Result) bool {
+						found := false
+						for ik := range keys {
+							if v.Get(keys[ik]).String() != keyValues[ik] {
+								found = false
+								break
+							}
+							found = true
+						}
+						if found {
+							res = v
+							return false
+						}
+						return true
+					},
+				)
+				if !res.Exists() {
+					tflog.Debug(ctx, fmt.Sprintf("removing Tags[%d] = %+v",
+						i,
+						(*parent).Tags[i],
+					))
+					(*parent).Tags = slices.Delete((*parent).Tags, i, i+1)
+					i--
+
+					continue
+				}
+				if value := res.Get("id"); value.Exists() && !data.Id.IsNull() {
+					data.Id = types.StringValue(value.String())
+				} else {
+					data.Id = types.StringNull()
+				}
+				(*parent).Tags[i] = data
+			}
+			(*parent).ApplicationFilters[i] = data
 		}
 		(*parent).Rules[i] = data
 	}

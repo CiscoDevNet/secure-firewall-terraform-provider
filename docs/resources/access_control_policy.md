@@ -148,6 +148,45 @@ resource "fmc_access_control_policy" "example" {
       intrusion_policy_id = "76d24097-41c4-4558-a4d0-a8c07ac08470"
       time_range_id       = "0050568A-7F57-0ed3-0000-004294975576"
       variable_set_id     = "76d24097-41c4-4558-a4d0-a8c07ac08470"
+      applications = [
+        {
+          id = "7967"
+        }
+      ]
+      application_filter_objects = [
+        {
+          id = "bb18bf88-eddc-11ef-83d2-b4300fadd560"
+        }
+      ]
+      application_filters = [
+        {
+          types = [
+            {
+              id = "WEBAPP"
+            }
+          ]
+          risks = [
+            {
+              id = "VERY_LOW"
+            }
+          ]
+          business_relevances = [
+            {
+              id = "LOW"
+            }
+          ]
+          categories = [
+            {
+              id = "118"
+            }
+          ]
+          tags = [
+            {
+              id = "24"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
@@ -216,6 +255,9 @@ Required:
 
 Optional:
 
+- `application_filter_objects` (Attributes Set) Set of Application Filtering objects. (see [below for nested schema](#nestedatt--rules--application_filter_objects))
+- `application_filters` (Attributes List) List of Application Filtering conditions. (see [below for nested schema](#nestedatt--rules--application_filters))
+- `applications` (Attributes Set) Set of applications. (see [below for nested schema](#nestedatt--rules--applications))
 - `category_name` (String) Name of the category that owns this rule (`name` from `categories` list).
 - `description` (String) Rule description.
 - `destination_dynamic_objects` (Attributes Set) Set of objects that represent dynamic destinations of traffic. (see [below for nested schema](#nestedatt--rules--destination_dynamic_objects))
@@ -263,6 +305,74 @@ Read-Only:
 
 - `id` (String) Id of the Access Rule.
 
+<a id="nestedatt--rules--application_filter_objects"></a>
+### Nested Schema for `rules.application_filter_objects`
+
+Required:
+
+- `id` (String) Id of the Application Filter.
+
+
+<a id="nestedatt--rules--application_filters"></a>
+### Nested Schema for `rules.application_filters`
+
+Optional:
+
+- `business_relevances` (Attributes Set) Set of Application Business Relevance levels. (see [below for nested schema](#nestedatt--rules--application_filters--business_relevances))
+- `categories` (Attributes Set) Set of Application Categories. (see [below for nested schema](#nestedatt--rules--application_filters--categories))
+- `risks` (Attributes Set) Set of Application Risk levels. (see [below for nested schema](#nestedatt--rules--application_filters--risks))
+- `tags` (Attributes Set) Set of Application Tags. (see [below for nested schema](#nestedatt--rules--application_filters--tags))
+- `types` (Attributes Set) Set of Application Types. (see [below for nested schema](#nestedatt--rules--application_filters--types))
+
+<a id="nestedatt--rules--application_filters--business_relevances"></a>
+### Nested Schema for `rules.application_filters.business_relevances`
+
+Required:
+
+- `id` (String) Id of the Application Business Relevance level.
+
+
+<a id="nestedatt--rules--application_filters--categories"></a>
+### Nested Schema for `rules.application_filters.categories`
+
+Required:
+
+- `id` (String) Id of the Application Category.
+
+
+<a id="nestedatt--rules--application_filters--risks"></a>
+### Nested Schema for `rules.application_filters.risks`
+
+Required:
+
+- `id` (String) Id of the Application Risk level.
+
+
+<a id="nestedatt--rules--application_filters--tags"></a>
+### Nested Schema for `rules.application_filters.tags`
+
+Required:
+
+- `id` (String) Id of the Application Tag.
+
+
+<a id="nestedatt--rules--application_filters--types"></a>
+### Nested Schema for `rules.application_filters.types`
+
+Required:
+
+- `id` (String) Id of the Application Type.
+
+
+
+<a id="nestedatt--rules--applications"></a>
+### Nested Schema for `rules.applications`
+
+Required:
+
+- `id` (String) Id of the Application.
+
+
 <a id="nestedatt--rules--destination_dynamic_objects"></a>
 ### Nested Schema for `rules.destination_dynamic_objects`
 
@@ -282,7 +392,7 @@ Optional:
 <a id="nestedatt--rules--destination_network_objects"></a>
 ### Nested Schema for `rules.destination_network_objects`
 
-Optional:
+Required:
 
 - `id` (String) Id of the object.
 - `type` (String) Type of the object.
@@ -339,7 +449,7 @@ Optional:
 <a id="nestedatt--rules--source_network_objects"></a>
 ### Nested Schema for `rules.source_network_objects`
 
-Optional:
+Required:
 
 - `id` (String) Id of the object.
 - `type` (String) Type of the object.
@@ -372,7 +482,7 @@ Optional:
 <a id="nestedatt--rules--source_sgt_objects"></a>
 ### Nested Schema for `rules.source_sgt_objects`
 
-Optional:
+Required:
 
 - `id` (String) Id of the object.
 - `type` (String) Type of the object.

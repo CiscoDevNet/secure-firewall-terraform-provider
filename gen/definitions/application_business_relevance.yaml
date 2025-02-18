@@ -1,0 +1,19 @@
+---
+name: Application Business Relevance
+rest_endpoint: /api/fmc_config/v1/domain/{DOMAIN_UUID}/object/applicationproductivities
+ds_description: This data source reads the Application Business Relevance level.
+no_resource: true
+no_import: true
+doc_category: Objects
+attributes:
+  - model_name: name
+    type: String
+    description: >-
+      Name of the Application Business Relevance level.
+    mandatory: true
+    example: Very Low
+    data_source_query: true
+  - model_name: type
+    type: String
+    description: Type of the object; this value is always 'ApplicationProductivity'.
+    computed: true

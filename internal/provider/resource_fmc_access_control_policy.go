@@ -272,11 +272,11 @@ func (r *AccessControlPolicyResource) Schema(ctx context.Context, req resource.S
 								Attributes: map[string]schema.Attribute{
 									"id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Id of the object.").String,
-										Optional:            true,
+										Required:            true,
 									},
 									"type": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Type of the object.").String,
-										Optional:            true,
+										Required:            true,
 									},
 								},
 							},
@@ -288,11 +288,11 @@ func (r *AccessControlPolicyResource) Schema(ctx context.Context, req resource.S
 								Attributes: map[string]schema.Attribute{
 									"id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Id of the object.").String,
-										Optional:            true,
+										Required:            true,
 									},
 									"type": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Type of the object.").String,
-										Optional:            true,
+										Required:            true,
 									},
 								},
 							},
@@ -414,11 +414,11 @@ func (r *AccessControlPolicyResource) Schema(ctx context.Context, req resource.S
 								Attributes: map[string]schema.Attribute{
 									"id": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Id of the object.").String,
-										Optional:            true,
+										Required:            true,
 									},
 									"type": schema.StringAttribute{
 										MarkdownDescription: helpers.NewAttributeDescription("Type of the object.").String,
-										Optional:            true,
+										Required:            true,
 									},
 								},
 							},
@@ -554,6 +554,98 @@ func (r *AccessControlPolicyResource) Schema(ctx context.Context, req resource.S
 						"variable_set_id": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Id of the Variable Set for the rule action.").String,
 							Optional:            true,
+						},
+						"applications": schema.SetNestedAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Set of applications.").String,
+							Optional:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"id": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Id of the Application.").String,
+										Required:            true,
+									},
+								},
+							},
+						},
+						"application_filter_objects": schema.SetNestedAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Set of Application Filtering objects.").String,
+							Optional:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"id": schema.StringAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Id of the Application Filter.").String,
+										Required:            true,
+									},
+								},
+							},
+						},
+						"application_filters": schema.ListNestedAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("List of Application Filtering conditions.").String,
+							Optional:            true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"types": schema.SetNestedAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Set of Application Types.").String,
+										Optional:            true,
+										NestedObject: schema.NestedAttributeObject{
+											Attributes: map[string]schema.Attribute{
+												"id": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Id of the Application Type.").String,
+													Required:            true,
+												},
+											},
+										},
+									},
+									"risks": schema.SetNestedAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Set of Application Risk levels.").String,
+										Optional:            true,
+										NestedObject: schema.NestedAttributeObject{
+											Attributes: map[string]schema.Attribute{
+												"id": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Id of the Application Risk level.").String,
+													Required:            true,
+												},
+											},
+										},
+									},
+									"business_relevances": schema.SetNestedAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Set of Application Business Relevance levels.").String,
+										Optional:            true,
+										NestedObject: schema.NestedAttributeObject{
+											Attributes: map[string]schema.Attribute{
+												"id": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Id of the Application Business Relevance level.").String,
+													Required:            true,
+												},
+											},
+										},
+									},
+									"categories": schema.SetNestedAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Set of Application Categories.").String,
+										Optional:            true,
+										NestedObject: schema.NestedAttributeObject{
+											Attributes: map[string]schema.Attribute{
+												"id": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Id of the Application Category.").String,
+													Required:            true,
+												},
+											},
+										},
+									},
+									"tags": schema.SetNestedAttribute{
+										MarkdownDescription: helpers.NewAttributeDescription("Set of Application Tags.").String,
+										Optional:            true,
+										NestedObject: schema.NestedAttributeObject{
+											Attributes: map[string]schema.Attribute{
+												"id": schema.StringAttribute{
+													MarkdownDescription: helpers.NewAttributeDescription("Id of the Application Tag.").String,
+													Required:            true,
+												},
+											},
+										},
+									},
+								},
+							},
 						},
 					},
 				},

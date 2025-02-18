@@ -1,0 +1,117 @@
+---
+name: Application Filter
+rest_endpoint: /api/fmc_config/v1/domain/{DOMAIN_UUID}/object/applicationfilters
+doc_category: Objects
+skip_minimum_test: true
+attributes:
+  - model_name: name
+    type: String
+    description: Name of the Application Filter.
+    mandatory: true
+    example: my_application_filter
+    data_source_query: true
+  - model_name: type
+    type: String
+    description: Type of the object; this value is always 'ApplicationFilter'.
+    computed: true
+  - model_name: applications
+    type: Set
+    description: Set of Applications. Either `applications` or `filters` must be specified.
+    attributes:
+      - model_name: id
+        type: String
+        description: Id of the Application.
+        example: "535"
+        write_only: true
+        mandatory: true
+        test_value: data.fmc_application.test.id
+      - model_name: name
+        type: String
+        description: Name of the Application.
+        example: "1-800-Flowers"
+        mandatory: true
+        id: true
+        test_value: data.fmc_application.test.name
+  - model_name: appConditions
+    tf_name: filters
+    type: List
+    description: List of Application filtering conditions. Either `applications` or `filters` must be specified.
+    ordered_list: true
+    attributes:
+    - model_name: applicationTypes
+      tf_name: types
+      type: Set
+      description: Set of Application Types.
+      attributes:
+        - model_name: id
+          type: String
+          description: Id of the Application Type.
+          example: "WEBAPP"
+          id: true
+          test_value: data.fmc_application_type.test.id
+    - model_name: risks
+      type: Set
+      description: Set of Application Risks.
+      attributes:
+        - model_name: id
+          type: String
+          description: Id of the Application Risk.
+          example: "VERY_LOW"
+          id: true
+          test_value: data.fmc_application_risk.test.id
+    - model_name: productivities
+      tf_name: business_relevances
+      type: Set
+      description: Set of Application Business Relevances.
+      attributes:
+        - model_name: id
+          type: String
+          description: Id of the Application Business Relevance.
+          example: "LOW"
+          id: true
+          test_value: data.fmc_application_business_relevance.test.id
+    - model_name: categories
+      type: Set
+      description: Set of Application Categories.
+      attributes:
+        - model_name: id
+          type: String
+          description: Id of the Application Category.
+          example: "118"
+          id: true
+          test_value: data.fmc_application_category.test.id
+    - model_name: tags
+      type: Set
+      description: Set of Application Tags.
+      attributes:
+        - model_name: id
+          type: String
+          description: Id of the Application Tag.
+          example: "24"
+          id: true
+          test_value: data.fmc_application_tag.test.id
+
+test_prerequisites: |-
+  data "fmc_application" "test" {
+    name = "1-800-Flowers"
+  }
+
+  data "fmc_application_risk" "test" {
+    name = "Medium"
+  }
+
+  data "fmc_application_type" "test" {
+    name = "Webapp"
+  }
+
+  data "fmc_application_business_relevance" "test" {
+    name = "Medium"
+  }
+
+  data "fmc_application_category" "test" {
+    name = "business"
+  }
+
+  data "fmc_application_tag" "test" {
+    name = "SSL protocol"
+  }

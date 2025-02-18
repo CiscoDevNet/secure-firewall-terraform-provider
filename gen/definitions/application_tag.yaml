@@ -1,0 +1,18 @@
+---
+name: Application Tag
+rest_endpoint: /api/fmc_config/v1/domain/{DOMAIN_UUID}/object/applicationtags
+no_resource: true
+no_import: true
+doc_category: Objects
+attributes:
+  - model_name: name
+    type: String
+    description: >-
+      Name of the Application Tag.
+    mandatory: true
+    example: allows remote connect
+    data_source_query: true
+  - model_name: type
+    type: String
+    description: Type of the object; this value is always 'ApplicationTag'.
+    computed: true

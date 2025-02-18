@@ -133,6 +133,45 @@ resource "fmc_access_control_policy" "example" {
       intrusion_policy_id = "76d24097-41c4-4558-a4d0-a8c07ac08470"
       time_range_id       = "0050568A-7F57-0ed3-0000-004294975576"
       variable_set_id     = "76d24097-41c4-4558-a4d0-a8c07ac08470"
+      applications = [
+        {
+          id = "7967"
+        }
+      ]
+      application_filter_objects = [
+        {
+          id = "bb18bf88-eddc-11ef-83d2-b4300fadd560"
+        }
+      ]
+      application_filters = [
+        {
+          types = [
+            {
+              id = "WEBAPP"
+            }
+          ]
+          risks = [
+            {
+              id = "VERY_LOW"
+            }
+          ]
+          business_relevances = [
+            {
+              id = "LOW"
+            }
+          ]
+          categories = [
+            {
+              id = "118"
+            }
+          ]
+          tags = [
+            {
+              id = "24"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

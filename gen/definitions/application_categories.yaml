@@ -1,0 +1,25 @@
+---
+name: Application Categories
+rest_endpoint: /api/fmc_config/v1/domain/{DOMAIN_UUID}/object/applicationcategories
+no_resource: true
+no_import: true
+is_bulk: true
+doc_category: Objects
+attributes:
+  - model_name: items
+    type: Map
+    description: >-
+      Map of Application Categories. The key of the map is the name of the individual Application Category.
+    map_key_example: software update
+    mandatory: true
+    attributes:
+      - model_name: id
+        type: String
+        resource_id: true
+        description: Id of the managed Application Category.
+        exclude_example: true
+        exclude_test: true        
+      - model_name: type
+        type: String
+        description: Type of the object; this value is always 'ApplicationCategory'.
+        computed: true

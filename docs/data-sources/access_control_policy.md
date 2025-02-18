@@ -60,6 +60,9 @@ Read-Only:
 Read-Only:
 
 - `action` (String) Rule action.
+- `application_filter_objects` (Attributes Set) Set of Application Filtering objects. (see [below for nested schema](#nestedatt--rules--application_filter_objects))
+- `application_filters` (Attributes List) List of Application Filtering conditions. (see [below for nested schema](#nestedatt--rules--application_filters))
+- `applications` (Attributes Set) Set of applications. (see [below for nested schema](#nestedatt--rules--applications))
 - `category_name` (String) Name of the category that owns this rule (`name` from `categories` list).
 - `description` (String) Rule description.
 - `destination_dynamic_objects` (Attributes Set) Set of objects that represent dynamic destinations of traffic. (see [below for nested schema](#nestedatt--rules--destination_dynamic_objects))
@@ -96,6 +99,74 @@ Read-Only:
 - `variable_set_id` (String) Id of the Variable Set for the rule action.
 - `vlan_tag_literals` (Attributes Set) Set of objects that represent vlan tags (literally specified). (see [below for nested schema](#nestedatt--rules--vlan_tag_literals))
 - `vlan_tag_objects` (Attributes Set) Set of objects that represent vlan tags or vlan tags group. (see [below for nested schema](#nestedatt--rules--vlan_tag_objects))
+
+<a id="nestedatt--rules--application_filter_objects"></a>
+### Nested Schema for `rules.application_filter_objects`
+
+Read-Only:
+
+- `id` (String) Id of the Application Filter.
+
+
+<a id="nestedatt--rules--application_filters"></a>
+### Nested Schema for `rules.application_filters`
+
+Read-Only:
+
+- `business_relevances` (Attributes Set) Set of Application Business Relevance levels. (see [below for nested schema](#nestedatt--rules--application_filters--business_relevances))
+- `categories` (Attributes Set) Set of Application Categories. (see [below for nested schema](#nestedatt--rules--application_filters--categories))
+- `risks` (Attributes Set) Set of Application Risk levels. (see [below for nested schema](#nestedatt--rules--application_filters--risks))
+- `tags` (Attributes Set) Set of Application Tags. (see [below for nested schema](#nestedatt--rules--application_filters--tags))
+- `types` (Attributes Set) Set of Application Types. (see [below for nested schema](#nestedatt--rules--application_filters--types))
+
+<a id="nestedatt--rules--application_filters--business_relevances"></a>
+### Nested Schema for `rules.application_filters.business_relevances`
+
+Read-Only:
+
+- `id` (String) Id of the Application Business Relevance level.
+
+
+<a id="nestedatt--rules--application_filters--categories"></a>
+### Nested Schema for `rules.application_filters.categories`
+
+Read-Only:
+
+- `id` (String) Id of the Application Category.
+
+
+<a id="nestedatt--rules--application_filters--risks"></a>
+### Nested Schema for `rules.application_filters.risks`
+
+Read-Only:
+
+- `id` (String) Id of the Application Risk level.
+
+
+<a id="nestedatt--rules--application_filters--tags"></a>
+### Nested Schema for `rules.application_filters.tags`
+
+Read-Only:
+
+- `id` (String) Id of the Application Tag.
+
+
+<a id="nestedatt--rules--application_filters--types"></a>
+### Nested Schema for `rules.application_filters.types`
+
+Read-Only:
+
+- `id` (String) Id of the Application Type.
+
+
+
+<a id="nestedatt--rules--applications"></a>
+### Nested Schema for `rules.applications`
+
+Read-Only:
+
+- `id` (String) Id of the Application.
+
 
 <a id="nestedatt--rules--destination_dynamic_objects"></a>
 ### Nested Schema for `rules.destination_dynamic_objects`
